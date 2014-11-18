@@ -24,3 +24,8 @@ gem 'devise'
 #gem 'simple_token_authentication'
 #gem 'figaro'
 #gem 'pushmeup' # https://github.com/NicosKaralis/pushmeup
+
+group :production do
+  gem 'rails_12factor'
+end
+
