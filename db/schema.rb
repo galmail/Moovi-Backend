@@ -79,6 +79,11 @@ ActiveRecord::Schema.define(version: 20141120105744) do
     t.datetime "updated_at"
   end
 
+  create_table "groups_users", id: false, force: true do |t|
+    t.integer "user_id"
+    t.integer "group_id"
+  end
+
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
@@ -102,11 +107,6 @@ ActiveRecord::Schema.define(version: 20141120105744) do
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", using: :btree
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
-
-  create_table "users_groups", id: false, force: true do |t|
-    t.integer "user_id"
-    t.integer "group_id"
-  end
 
   create_table "videos", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.integer  "group_id"
