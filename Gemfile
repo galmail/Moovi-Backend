@@ -21,8 +21,8 @@ gem 'debugger', group: [:development, :test]
 gem 'annotate', github: 'ctran/annotate_models'
 gem 'activeadmin', github: 'gregbell/active_admin'
 gem 'devise'
-#gem 'simple_token_authentication'
-#gem 'figaro'
+gem 'simple_token_authentication'
+gem 'figaro'
 #gem 'pushmeup' # https://github.com/NicosKaralis/pushmeup
 
 group :production do

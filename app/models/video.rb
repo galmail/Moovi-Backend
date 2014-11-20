@@ -19,4 +19,5 @@ class Video < ActiveRecord::Base
   belongs_to  :group
   belongs_to  :moderator, :class_name => 'User'
   belongs_to  :receiver, :class_name => 'User'
+  has_many    :clips
 end

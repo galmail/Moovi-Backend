@@ -1,0 +1,40 @@
+# Add application configuration variables here, as shown below.
+
+# PUSHER_APP_ID: "2954"
+# PUSHER_KEY: 7381a978f7dd7f9a1117
+# PUSHER_SECRET: abdc3b896a0ffb85d373
+# STRIPE_API_KEY: EdAvEPVEC3LuaTg5Q3z6WbDVqZlcBQ8Z
+# STRIPE_PUBLIC_KEY: pk_BRgD57O8fHja9HxduJUszhef6jCyS
+
+defaults: &defaults
+  # Settings
+  GRUVID_EMAIL: hi@gruvid.com
+  
+  # Amazon S3
+  AWS_BUCKET: gruvid-test
+  #AWS_KEY: AKIAIW4PW5CMS4TEGVIA
+  #AWS_SECRET: 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
+  # Apple Push Notifications
+  APN_HOST: gateway.push.apple.com
+  APN_PORT: 2195
+  #APN_PEM_FILE: app/assets/certificates/apnProd.pem
+  #APN_PASSWORD: Dingo123
+  
+development:
+  <<: *defaults
+  
+test:
+  <<: *defaults
+  
+production:
+  <<: *defaults
+  # Amazon S3
+  #AWS_BUCKET: dingoapp-prod
+  #AWS_KEY: AKIAIW4PW5CMS4TEGVIA
+  #AWS_SECRET: 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
+  
+  # Apple Push Notifications
+  #APN_HOST: gateway.push.apple.com
+  #APN_PORT: 2195
+  #APN_PEM_FILE: app/assets/certificates/apnProd.pem
+  #APN_PASSWORD: Dingo123
