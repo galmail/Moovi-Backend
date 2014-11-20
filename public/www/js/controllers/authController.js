@@ -3,7 +3,63 @@
  *
  */
 
-gruvid.controllers.controller('AuthCtrl', function($scope, $ionicModal, $timeout, Facebook) {
+gruvid.controllers.controller('AuthCtrl', function($scope, $ionicModal, $timeout, Facebook, User) {
+
+    /******** Facebook Part ********/
+
+    var userIsConnected = false;
+    
+    $scope.$watch(
+      function() {
+        return Facebook.isReady();
+      },
+      function(newVal) {
+        if (newVal)
+          $scope.facebookReady = true;
+      }
+    );
+    
+    Facebook.getLoginStatus(function(response) {
+      if (response.status == 'connected') {
+        userIsConnected = true;
+      }
+    });
+    
+    $scope.fbLogin = function() {
+      if(!userIsConnected) {
+        Facebook.login(function(response) {
+          if (response.status == 'connected') {
+            $scope.logged = true;
+            $scope.fbLoadUserInfo();
+          }
+        });
+      }
+    };
+
+    $scope.fbLogout = function() {
+      Facebook.logout(function() {
+        $scope.$apply(function() {
+          $scope.user   = {};
+          $scope.logged = false;  
+        });
+      });
+    };
+    
+    $scope.fbLoadUserInfo = function() {
+      Facebook.api('/me', function(response) {
+        User.LoggedUser = response;
+
+        /**
+         * Using $scope.$apply since this happens outside angular framework.
+         */
+        //$scope.$apply(function() {
+        //  $scope.user = response;
+        //});
+        
+      });
+    };
+
+    /******** Login Part ********/
 
     // Form data for the login modal
     $scope.loginData = {};
@@ -36,27 +92,5 @@ gruvid.controllers.controller('AuthCtrl', function($scope, $ionicModal, $timeout
       }, 1000);
     };
 
-    $scope.fbLogin = function() {
-      // From now on you can use the Facebook service just as Facebook api says
-      Facebook.login(function(response) {
-        // Do something with response.
-        console.log(response);
-      });
-    };
-
-    $scope.fbGetLoginStatus = function() {
-      Facebook.getLoginStatus(function(response) {
-        if(response.status === 'connected') {
-          $scope.loggedIn = true;
-        } else {
-          $scope.loggedIn = false;
-        }
-      });
-    };
-
-    $scope.fbGetMe = function() {
-      Facebook.api('/me', function(response) {
-        $scope.user = response;
-      });
-    };
+    
   });

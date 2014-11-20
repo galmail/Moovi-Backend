@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
 
-var gruvid = angular.module('gruvid',['ionic','facebook','gruvid.controllers']);
+var gruvid = angular.module('gruvid',['ionic','facebook','gruvid.controllers','gruvid.services']);
 gruvid.controllers = angular.module('gruvid.controllers', []);
 gruvid.services = angular.module('gruvid.services', []);
 
@@ -77,7 +77,8 @@ gruvid.run(function($ionicPlatform) {
     url: "/settings",
     views: {
       'menuContent' :{
-        templateUrl: "js/templates/settings.html"
+        templateUrl: "js/templates/settings.html",
+        controller: 'SettingsCtrl'
       }
     }
   })
