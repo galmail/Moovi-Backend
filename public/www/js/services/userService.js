@@ -17,10 +17,10 @@ gruvid.services.factory('User', function($http) {
   		}).success(function(data){
   			console.log('login success: ' + JSON.stringify(data));
   			// save auth_token
-  			this.callback(true);
+  			callback(true);
   		}).error(function(){
   			console.log('login error');
-  			this.callback(false);
+  			callback(false);
   		});
   	},
   	signup: function(callback){
@@ -39,14 +39,12 @@ gruvid.services.factory('User', function($http) {
   		var self = this;
   		// try login first if fail, try to signup user
   		console.log('inside connect... trying to login first.');
-  		self.login().then(function(ok){
+  		self.login(function(ok){
   			if(ok){
   				callback(true);
   			}
   			else {
-  				self.signup().then(function(ok){
-  					callback(ok);
-  				});
+  				self.signup(callback);
   			}
   		});
   	}
