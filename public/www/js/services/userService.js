@@ -54,8 +54,10 @@ gruvid.services.factory('User', function($http) {
   		var userData = params;
   		userData.fb_id = params.id;
   		delete(userData.id);
-  		var bdate = params.birthday.split('/');
-  		userData.birthday = bdate[1] + '/' + bdate[0] + '/' + bdate[2];
+  		if(params.birthday){
+  			var bdate = params.birthday.split('/');
+  			userData.birthday = bdate[1] + '/' + bdate[0] + '/' + bdate[2];
+  		}
   		userData.password = userData.fb_id;
   		return userData;
   	}
