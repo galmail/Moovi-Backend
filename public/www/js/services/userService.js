@@ -17,10 +17,10 @@ gruvid.services.factory('User', function($http) {
   		}).success(function(data){
   			console.log('login success: ' + JSON.stringify(data));
   			// save auth_token
-  			callback(true);
+  			this.callback(true);
   		}).error(function(){
   			console.log('login error');
-  			callback(false);
+  			this.callback(false);
   		});
   	},
   	signup: function(callback){
