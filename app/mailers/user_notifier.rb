@@ -7,8 +7,6 @@ class UserNotifier < ActionMailer::Base
     mail(:from => self.gruvid_email, :to => @user.email,:subject => 'Thanks for signing up to Gruvid' )
   end
   
-  private
-  
   def gruvid_email
     "\"Gruvid Team\" <#{ENV['GRUVID_EMAIL']}>"
   end
