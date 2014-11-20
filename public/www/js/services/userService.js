@@ -9,10 +9,11 @@ gruvid.services.factory('User', function($http) {
   	getInfo: function(){ return data; },
   	setInfo: function(newdata){ data = newdata; },
   	login: function(callback){
+  		var self = this;
   		$http.get('/users/sign_in',{
   			params: {
-  				email: data.email,
-  				password: data.password
+  				email: self.getInfo().email,
+  				password: self.getInfo().password
   			}
   		}).success(function(res){
   			console.log('login success: ' + JSON.stringify(res));
@@ -26,7 +27,7 @@ gruvid.services.factory('User', function($http) {
   	signup: function(callback){
   		var self = this;
   		$http.get('/users/sign_up',{
-  			params: self.fbParseUserInfo(data)
+  			params: self.getInfo()
   		}).success(function(res){
   			console.log('signup success: ' + JSON.stringify(res));
   			self.setInfo(res);

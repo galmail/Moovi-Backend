@@ -54,7 +54,7 @@ gruvid.controllers.controller('AuthCtrl', function($scope, $ionicModal, $timeout
     
     $scope.fbLoadUserInfo = function() {
       Facebook.api('/me', function(data) {
-        User.setInfo(data);
+        User.setInfo(User.fbParseUserInfo(data));
         User.connect().then(function(){ $location.path('/'); });
       });
     };
