@@ -14,8 +14,8 @@ gruvid.services.factory('User', function($http) {
   				email: data.email,
   				password: data.password
   			}
-  		}).success(function(data){
-  			console.log('login success: ' + JSON.stringify(data));
+  		}).success(function(res){
+  			console.log('login success: ' + JSON.stringify(res));
   			// save auth_token
   			callback(true);
   		}).error(function(){
@@ -26,9 +26,10 @@ gruvid.services.factory('User', function($http) {
   	signup: function(callback){
   		var self = this;
   		$http.get('/users/sign_up',{
-  			params: data
-  		}).success(function(data){
-  			console.log('signup success: ' + JSON.stringify(data));
+  			params: self.fbParseUserInfo(data)
+  		}).success(function(res){
+  			console.log('signup success: ' + JSON.stringify(res));
+  			self.setInfo(res);
   			self.login(callback);
   		}).error(function(){
   			console.log('signup error');
@@ -47,7 +48,19 @@ gruvid.services.factory('User', function($http) {
   				self.signup(callback);
   			}
   		});
+  	},
+  	fbParseUserInfo: function(params){
+  		var userData = params;
+  		userData.fb_id = params.id;
+  		delete(userData.id);
+  		var bdate = params.birthday.split('/');
+  		userData.birthday = bdate[1] + '/' + bdate[0] + '/' + bdate[2];
+  		userData.password = userData.fb_id;
+  		return userData;
   	}
+
+
+
   };
 
 });
