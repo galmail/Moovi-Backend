@@ -1,0 +1,19 @@
+[ { "id" : 1,
+    "title" : "Reggae"
+  },
+  { "id" : 2,
+    "title" : "Chill"
+  },
+  { "id" : 3,
+    "title" : "Dubstep"
+  },
+  { "id" : 4,
+    "title" : "Indie"
+  },
+  { "id" : 5,
+    "title" : "Rap"
+  },
+  { "id" : 6,
+    "title" : "Cowbell"
+  }
+]
