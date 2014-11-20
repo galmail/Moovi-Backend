@@ -18,8 +18,8 @@ gruvid.services.factory('User', function($http) {
   			console.log('login success: ' + JSON.stringify(data));
   			// save auth_token
   			callback(true);
-  		}).error(function(data){
-  			console.log('login error: ' + JSON.stringify(data));
+  		}).error(function(){
+  			console.log('login error');
   			callback(false);
   		});
   	},
@@ -30,8 +30,8 @@ gruvid.services.factory('User', function($http) {
   		}).success(function(data){
   			console.log('signup success: ' + JSON.stringify(data));
   			self.login(callback);
-  		}).error(function(data){
-  			console.log('signup error: ' + JSON.stringify(data));
+  		}).error(function(){
+  			console.log('signup error');
   			callback(false);
   		});
   	},
