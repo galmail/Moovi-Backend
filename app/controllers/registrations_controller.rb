@@ -26,14 +26,15 @@ class RegistrationsController < Devise::RegistrationsController
   
   def verify_params
     params.require(:email)
-    params.permit(:email,:password,:name,:surname,:photo_url,:date_of_birth,:city,:device_uid,:device_brand,:device_model,:device_os,:device_app_version,:device_mobile_number,:device_location,:device_ip)
+    #params.permit(:email,:password,:name,:surname,:photo_url,:date_of_birth,:city,:device_uid,:device_brand,:device_model,:device_os,:device_app_version,:device_mobile_number,:device_location,:device_ip)
   end
   
   def user_params
     params[:name] = URI.unescape(params[:name]) if params[:name].present?
-    params[:surname] = URI.unescape(params[:surname]) if params[:surname].present?
-    params[:city] = URI.unescape(params[:city]) if params[:city].present?
-    params.permit(:email,:password,:name,:surname,:photo_url,:date_of_birth,:city,:allow_push_notifications,:allow_dingo_emails,:fb_id,:paypal_account)
+    params[:first_name] = URI.unescape(params[:first_name]) if params[:first_name].present?
+    params[:last_name] = URI.unescape(params[:last_name]) if params[:last_name].present?
+    params[:date_of_birth] = params[:birthday] if params[:birthday].present?
+    params.permit(:fb_id,:email,:password,:name,:first_name,:last_name,:gender,:locale,:photo_url,:date_of_birth)
   end
   
   def device_params

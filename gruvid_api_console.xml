@@ -11,13 +11,14 @@
          <param name="email" required="true" type="xsd:string" style="query" />
          <param name="password" required="false" type="xsd:string" style="query" />
          <param name="name" required="false" type="xsd:string" style="query" />
+         <param name="first_name" required="false" type="xsd:string" style="query" />
+         <param name="last_name" required="false" type="xsd:string" style="query" />
          <param name="date_of_birth" required="false" type="xsd:date" style="query" />
-         <param name="city" required="false" type="xsd:date" style="query" />
          <param name="photo_url" required="false" type="xsd:string" style="query" />
-         <param name="allow_dingo_emails" required="false" type="xsd:boolean" style="query" />
-         <param name="allow_push_notifications" required="false" type="xsd:boolean" style="query" />
+         <param name="gender" required="false" type="xsd:string" style="query" />
+         <param name="locale" required="false" type="xsd:string" style="query" />
          <param name="fb_id" required="false" type="xsd:string" style="query" />
-         <param name="paypal_account" required="false" type="xsd:string" style="query" />
+         
          <param name="device_uid" required="false" type="xsd:string" style="query" />
          <param name="device_brand" required="false" type="xsd:string" style="query" />
          <param name="device_model" required="false" type="xsd:string" style="query" />

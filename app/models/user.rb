@@ -20,6 +20,11 @@
 #  city                   :string(255)
 #  photo_url              :string(255)
 #  authentication_token   :string(255)
+#  fb_id                  :string(255)
+#  first_name             :string(255)
+#  last_name              :string(255)
+#  gender                 :string(255)
+#  locale                 :string(255)
 #
 
 class User < ActiveRecord::Base
