@@ -9,18 +9,14 @@ class SessionsController < Devise::RegistrationsController
   def new
     verify_params
     myuser = User.find_for_authentication({:email => params[:email]})
-    if (myuser.valid_password? params[:password] or myuser.authentication_token==params[:auth_token]) and (!myuser.banned?)
+    if (myuser.valid_password? params[:password] or myuser.authentication_token==params[:auth_token])
       render :json => {
         :success => true,
         :id => myuser.id,
         :name => myuser.name,
-        :surname => myuser.surname,
         :email => params[:email],
         :auth_token => myuser.authentication_token,
-        :allow_dingo_emails => myuser.allow_dingo_emails,
-        :allow_push_notifications => myuser.allow_push_notifications,
-        :fb_id => myuser.fb_id,
-        :paypal_account => myuser.paypal_account
+        :fb_id => myuser.fb_id
       }
     else
       render :json => { :success => false }, status: :unauthorized
