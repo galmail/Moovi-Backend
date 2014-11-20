@@ -3,7 +3,7 @@
  *
  */
 
-gruvid.controllers.controller('AuthCtrl', function($scope, $ionicModal, $timeout, Facebook, User) {
+gruvid.controllers.controller('AuthCtrl', function($scope, $ionicModal, $timeout, $location, Facebook, User) {
 
     /******** Facebook Part ********/
 
@@ -24,6 +24,7 @@ gruvid.controllers.controller('AuthCtrl', function($scope, $ionicModal, $timeout
         userIsConnected = true;
       }
     });
+
     
     $scope.fbLogin = function() {
       if(!userIsConnected) {
@@ -31,8 +32,13 @@ gruvid.controllers.controller('AuthCtrl', function($scope, $ionicModal, $timeout
           if (response.status == 'connected') {
             $scope.logged = true;
             $scope.fbLoadUserInfo();
+            $scope.closeLogin();
           }
-        });
+        },{scope: 'email, user_birthday, user_friends'});
+      } else {
+        $scope.logged = true;
+        $scope.fbLoadUserInfo();
+        $scope.closeLogin();
       }
     };
 
@@ -40,22 +46,16 @@ gruvid.controllers.controller('AuthCtrl', function($scope, $ionicModal, $timeout
       Facebook.logout(function() {
         $scope.$apply(function() {
           $scope.user   = {};
-          $scope.logged = false;  
+          $scope.logged = false;
+          User.setInfo({});
         });
       });
     };
     
     $scope.fbLoadUserInfo = function() {
-      Facebook.api('/me', function(response) {
-        User.LoggedUser = response;
-
-        /**
-         * Using $scope.$apply since this happens outside angular framework.
-         */
-        //$scope.$apply(function() {
-        //  $scope.user = response;
-        //});
-        
+      Facebook.api('/me', function(data) {
+        User.setInfo(data);
+        User.connect().then(function(){ $location.path('/'); });
       });
     };
 
@@ -79,6 +79,10 @@ gruvid.controllers.controller('AuthCtrl', function($scope, $ionicModal, $timeout
     // Open the login modal
     $scope.login = function() {
       $scope.modal.show();
+    };
+
+    $scope.logout = function() {
+      $scope.fbLogout();
     };
 
     // Perform the login action when the user submits the login form

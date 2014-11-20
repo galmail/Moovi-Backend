@@ -5,9 +5,10 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
 
-var gruvid = angular.module('gruvid',['ionic','facebook','gruvid.controllers','gruvid.services']);
+var gruvid = angular.module('gruvid',['ionic','facebook','gruvid.controllers','gruvid.services','gruvid.directives']);
 gruvid.controllers = angular.module('gruvid.controllers', []);
 gruvid.services = angular.module('gruvid.services', []);
+gruvid.directives = angular.module('gruvid.directives', []);
 
 gruvid.run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -24,9 +25,14 @@ gruvid.run(function($ionicPlatform) {
 })
 
 .config(function(FacebookProvider) {
-   // Set your appId through the setAppId method or
-   // use the shortcut in the initialize method directly.
-   FacebookProvider.init('672126826238840');
+   var fbAppId = '';
+   if(window.location.href.indexOf('localhost')>0){
+    fbAppId = '854877257866349';
+   }
+   else {
+    fbAppId = '672126826238840';
+   }
+   FacebookProvider.init(fbAppId);
 })
 
 .config(function($stateProvider, $urlRouterProvider) {
