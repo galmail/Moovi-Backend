@@ -2,36 +2,47 @@
 
   <ion-side-menu-content>
     <ion-nav-bar class="bar-stable nav-title-slide-ios7">
-      <ion-nav-back-button class="button-clear"><i class="icon ion-ios7-arrow-back"></i> Back</ion-nav-back-button>
+      
+      <ion-nav-back-button class="button-clear">
+        <i class="icon ion-ios7-arrow-back"></i> Back
+      </ion-nav-back-button>
+
     </ion-nav-bar>
     <ion-nav-view name="menuContent" animation="slide-left-right"></ion-nav-view>
   </ion-side-menu-content>
 
-  <ion-side-menu side="left">
+  <ion-side-menu class="gv-side-menu" side="left">
     <header class="bar bar-header bar-stable">
-      <h1 class="title">Sidebar Menu</h1>
+      <h1 class="title">Gruvid</h1>
     </header>
     <ion-content class="has-header">
       <ion-list>
-        <ion-item nav-clear menu-close ng-click="login()">
+        <ion-item menu-close nav-clear class="item item-icon-left" ng-click="login()">
+          <i class="icon ion-log-in"></i>
           Login
         </ion-item>
-        <ion-item nav-clear menu-close href="#/app/videos">
+        <ion-item menu-close nav-clear class="item item-icon-left" href="#/app/videos">
+          <i class="icon ion-film-marker"></i>
           My Videos
         </ion-item>
-        <ion-item nav-clear menu-close href="#/app/create-video">
+        <ion-item menu-close nav-clear class="item item-icon-left" href="#/app/create-video">
+          <i class="icon ion-videocamera"></i>
           Create Video
         </ion-item>
-        <ion-item nav-clear menu-close href="#/app/join-video">
+        <ion-item menu-close nav-clear class="item item-icon-left" href="#/app/join-video">
+          <i class="icon ion-android-social"></i>
           Join Video
         </ion-item>
-        <ion-item nav-clear menu-close href="#/app/settings">
+        <ion-item menu-close nav-clear class="item item-icon-left" href="#/app/settings">
+          <i class="icon ion-android-settings"></i>
           Settings
         </ion-item>
-        <ion-item nav-clear menu-close href="#/app/about">
+        <ion-item menu-close nav-clear class="item item-icon-left" href="#/app/about">
+          <i class="icon ion-android-information"></i>
           About
         </ion-item>
-        <ion-item nav-clear menu-close ng-click="logout()">
+        <ion-item menu-close nav-clear class="item item-icon-left" ng-click="logout()">
+          <i class="icon ion-log-out"></i>
           Logout
         </ion-item>
       </ion-list>

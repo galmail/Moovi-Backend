@@ -54,11 +54,11 @@ gruvid.run(function($ionicPlatform) {
       }
     }
   })
-  .state('app.singleVideo', {
+  .state('app.previewVideo', {
     url: "/videos/:videoId",
     views: {
       'menuContent' :{
-        templateUrl: "js/templates/video.html",
+        templateUrl: "js/templates/video-preview.html",
         controller: 'VideoCtrl'
       }
     }
@@ -67,7 +67,8 @@ gruvid.run(function($ionicPlatform) {
     url: "/create-video",
     views: {
       'menuContent' :{
-        templateUrl: "js/templates/create-video.html"
+        templateUrl: "js/templates/video-edit.html",
+        controller: 'VideoCtrl'
       }
     }
   })

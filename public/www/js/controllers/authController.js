@@ -3,7 +3,7 @@
  *
  */
 
-gruvid.controllers.controller('AuthCtrl', function($scope, $ionicModal, $timeout, $location, Facebook, User) {
+gruvid.controllers.controller('AuthCtrl', function($scope, $ionicModal, $timeout, Facebook, User) {
 
     /******** Facebook Part ********/
 
@@ -32,13 +32,11 @@ gruvid.controllers.controller('AuthCtrl', function($scope, $ionicModal, $timeout
           if (response.status == 'connected') {
             $scope.logged = true;
             $scope.fbLoadUserInfo();
-            $scope.closeLogin();
           }
         },{scope: 'email, user_birthday, user_friends'});
       } else {
         $scope.logged = true;
         $scope.fbLoadUserInfo();
-        $scope.closeLogin();
       }
     };
 
@@ -55,7 +53,7 @@ gruvid.controllers.controller('AuthCtrl', function($scope, $ionicModal, $timeout
     $scope.fbLoadUserInfo = function() {
       Facebook.api('/me', function(data) {
         User.setInfo(User.fbParseUserInfo(data));
-        User.connect(function(){ $location.path('/'); });
+        User.connect(function(){ $scope.closeLogin(); });
       });
     };
 
@@ -88,12 +86,20 @@ gruvid.controllers.controller('AuthCtrl', function($scope, $ionicModal, $timeout
     // Perform the login action when the user submits the login form
     $scope.doLogin = function() {
       console.log('Doing login', $scope.loginData);
-
+      User.setInfo($scope.loginData);
+      User.login(function(success){
+        if(success){
+          $scope.closeLogin();
+        }
+        else {
+          alert('Invalid Email or Password');
+        }
+      });
       // Simulate a login delay. Remove this and replace with your login
       // code if using a login system
-      $timeout(function() {
-        $scope.closeLogin();
-      }, 1000);
+      // $timeout(function() {
+      //   $scope.closeLogin();
+      // }, 1000);
     };
 
     

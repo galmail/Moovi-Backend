@@ -1,0 +1,63 @@
+/* Edit Video */
+
+.gv-video-edit {
+
+	ion-content {
+
+		& > div {
+			height: 100%;
+			& > div {
+				height: 100%;
+			}
+		}
+	}
+	
+	.slide {
+		width: 100%;
+		height: 100%;
+
+		h4 {
+			text-align: center;
+			margin-top: 20px;
+			margin-bottom: 20px;
+		}
+		
+	}
+
+	/********* BASIC INFO ********/
+
+	.basic-info {
+
+		.video-cover {
+			.icon {
+				font-size: 70px;
+				display: block;
+				text-align: center;
+				margin-top: 20px;
+				margin-bottom: 10px;
+			}
+			label {
+				display: block;
+				text-align: center;
+			}
+		}
+
+	}
+
+	/********* SELECT OCASSION ********/
+
+	.select-ocassion {
+		
+		
+
+	}
+
+
+
+
+
+
+}
+
+
+
