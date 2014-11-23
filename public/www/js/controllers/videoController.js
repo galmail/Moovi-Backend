@@ -55,8 +55,18 @@ gruvid.controllers.controller('VideoCtrl', function($scope, $stateParams, $http,
 		}
 	};
 
+	$scope.videoData = {};
+
 	$scope.saveVideo = function(){
-		//$http.post('/api/v1/videos.json', {msg:'hello word!'});
+		console.log('saveVideo');
+		console.log($scope.videoData.title);
+		$http.post('/api/v1/videos.json', $scope.videoData)
+		.success(function(){
+			alert('Video Saved Successfully!');
+		})
+		.error(function(){
+			alert('Could not save video!');
+		});
 	};
 
 

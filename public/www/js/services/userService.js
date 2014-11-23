@@ -18,7 +18,7 @@ gruvid.services.factory('User', function($http) {
   		}).success(function(res){
   			console.log('login success: ' + JSON.stringify(res));
   			// save auth_token
-        $httpProvider.defaults.headers.get = {
+        $http.defaults.headers.common = {
           'X-User-Email': res.email,
           'X-User-Token': res.auth_token
         };

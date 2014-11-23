@@ -3,7 +3,7 @@
     <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
   </ion-nav-buttons>
   <ion-nav-buttons side="right">
-    <button class="button" ng-click="doSomething()">Save</button>
+    <button class="button" ng-click="saveVideo()">Save</button>
   </ion-nav-buttons>
   <ion-content class="has-header">
 
@@ -17,7 +17,7 @@
 		    	<div class="list">
 					  <div class="video-title">
 						  <label class="item item-input">
-						    <input type="text" placeholder="Video Title">
+						    <input type="text" placeholder="Video Title" ng-model="videoData.title">
 						  </label>
 					  </div>
 					  <div class="video-cover">
