@@ -17,11 +17,11 @@ class Api::V1::S3TokenController < ApplicationController
 
   def s3_upload_policy(filetype)
     if filetype == 'video'
-      @policy ||= create_s3_upload_policy(@video_max_size)
+      @policy ||= create_s3_upload_policy(self.video_max_size)
     elsif filetype == 'photo'
-      @policy ||= create_s3_upload_policy(@photo_max_size)
+      @policy ||= create_s3_upload_policy(self.photo_max_size)
     else
-      @policy ||= create_s3_upload_policy(@default_max_size)
+      @policy ||= create_s3_upload_policy(self.default_max_size)
     end
   end
 
