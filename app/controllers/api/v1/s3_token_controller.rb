@@ -1,13 +1,21 @@
 class Api::V1::S3TokenController < ApplicationController
   
-  @default_max_size = 1   #1 MB
-  @photo_max_size = 10    #10 MB
-  @video_max_size = 20    #20 MB
-
+  def default_max_size
+    return 1 #1 MB
+  end
+  
+  def photo_max_size
+    return 10 #10 MB
+  end
+  
+  def video_max_size
+    return 20 #20 MB
+  end
+  
   def index
     params.require(:ftype)
     render json: {
-      policy:    s3_upload_policy(params[:ftype]),
+      policy:    s3_upload_policy,
       signature: s3_upload_signature,
       key:       ENV['AWS_KEY']
     }
@@ -15,10 +23,10 @@ class Api::V1::S3TokenController < ApplicationController
 
   protected
 
-  def s3_upload_policy(filetype)
-    if filetype == 'video'
+  def s3_upload_policy
+    if params[:ftype] == 'video'
       @policy ||= create_s3_upload_policy(self.video_max_size)
-    elsif filetype == 'photo'
+    elsif params[:ftype] == 'photo'
       @policy ||= create_s3_upload_policy(self.photo_max_size)
     else
       @policy ||= create_s3_upload_policy(self.default_max_size)
