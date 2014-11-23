@@ -91,5 +91,49 @@
          </method>
       </resource>
       
+      <!-- create_video -->
+      <resource path="/api/v1/videos">
+          <param name="Content-Type" required="true" type="xsd:string" style="header" default="application/json"></param>
+          <param name="Accept" required="true" type="xsd:string" style="header" default="application/json"></param>
+          <param name="title" required="true" type="xsd:string" style="query" default=""></param>
+          <param name="receiver_id" required="true" type="xsd:integer" style="query" default=""></param>
+          <method id="create_video" name="POST" apigee:displayName="Create Video">
+              <apigee:tags>
+                  <apigee:tag primary="true">Videos</apigee:tag>
+              </apigee:tags>
+              <apigee:authentication required="true"/>
+              <doc apigee:url="http://api.mydomain.com/doc/my-method">create_video</doc>
+          </method>
+      </resource>
+      
+      <!-- ##################### CLIPS ##################### -->
+      
+      <!-- get_clips -->
+      <resource path="/api/v1/clips">
+         <param name="Content-Type" required="true" type="xsd:string" style="header" default="application/json" />
+         <param name="Accept" required="true" type="xsd:string" style="header" default="application/json" />
+         <method id="get_clips" name="GET" apigee:displayName="Get Clips">
+            <apigee:tags>
+               <apigee:tag primary="true">Clips</apigee:tag>
+            </apigee:tags>
+            <apigee:authentication required="true" />
+            <doc apigee:url="http://api.mydomain.com/doc/my-method">get_clips</doc>
+         </method>
+      </resource>
+      
+      <!-- create_clip -->
+      <resource path="/api/v1/clips">
+          <param name="Content-Type" required="true" type="xsd:string" style="header" default="application/json"></param>
+          <param name="Accept" required="true" type="xsd:string" style="header" default="application/json"></param>
+          <param name="video_id" required="true" type="xsd:string" style="query" default=""></param>
+          <method id="create_clip" name="POST" apigee:displayName="Create Clip">
+              <apigee:tags>
+                  <apigee:tag primary="true">Clips</apigee:tag>
+              </apigee:tags>
+              <apigee:authentication required="true"/>
+              <doc apigee:url="http://api.mydomain.com/doc/my-method">create_clip</doc>
+          </method>
+      </resource>
+      
    </resources>
 </application>
