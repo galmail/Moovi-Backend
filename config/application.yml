@@ -11,9 +11,8 @@ defaults: &defaults
   GRUVID_EMAIL: hi@gruvid.com
   
   # Amazon S3
-  AWS_BUCKET: gruvid-test
-  #AWS_KEY: AKIAIW4PW5CMS4TEGVIA
-  #AWS_SECRET: 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
+  AWS_KEY: AKIAJWPSHM6LB7HAVAGQ
+  AWS_SECRET: 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
   # Apple Push Notifications
   APN_HOST: gateway.push.apple.com
   APN_PORT: 2195
@@ -22,16 +21,16 @@ defaults: &defaults
   
 development:
   <<: *defaults
+  AWS_BUCKET: gruvid-test
   
 test:
   <<: *defaults
+  AWS_BUCKET: gruvid-test
   
 production:
   <<: *defaults
   # Amazon S3
-  #AWS_BUCKET: dingoapp-prod
-  #AWS_KEY: AKIAIW4PW5CMS4TEGVIA
-  #AWS_SECRET: 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
+  AWS_BUCKET: gruvid-prod
   
   # Apple Push Notifications
   #APN_HOST: gateway.push.apple.com
