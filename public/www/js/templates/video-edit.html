@@ -24,9 +24,12 @@
 						  <i class="icon ion-image"></i>
 						  <label>upload video cover</label>
 					  </div>
-					</div>
-
-
+					  <div s3-upload bucket="'gruvid-test'" ng-model="videoData.cover" s3-upload-options="{getOptionsUri: '/api/v1/s3_token.json?ftype=photo', folder: 'photos/'}">
+						</div>
+						<div>
+					    <debug val="videoData"></debug>
+					  </div>
+		    	</div>
 		    </div>
 		  </ion-slide>
 		  

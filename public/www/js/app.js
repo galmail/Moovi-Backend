@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
 
-var gruvid = angular.module('gruvid',['ionic','facebook','gruvid.controllers','gruvid.services','gruvid.directives']);
+var gruvid = angular.module('gruvid',['ionic','facebook','ngS3upload','gruvid.controllers','gruvid.services','gruvid.directives']);
 gruvid.controllers = angular.module('gruvid.controllers', []);
 gruvid.services = angular.module('gruvid.services', []);
 gruvid.directives = angular.module('gruvid.directives', []);
