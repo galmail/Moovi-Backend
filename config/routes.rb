@@ -19,11 +19,12 @@ Rails.application.routes.draw do
         # post  'report'
       # end
       
-      # namespace :payments do
+      #namespace :s3_token do
+        # get   's3_token'
         # post  'store_credit_card'
-        # get   'verify_credit_card'
         # post  'authorize_payment'
-      # end
+      #end
+      get   's3_token', :controller => 's3_token', :action => 'index'
       
     end
   end
