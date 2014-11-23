@@ -34,7 +34,7 @@ gruvid.services.factory('User', function($http) {
   			params: self.getInfo()
   		}).success(function(res){
   			console.log('signup success: ' + JSON.stringify(res));
-  			self.setInfo(res);
+  			//self.setInfo(res);
   			self.login(callback);
   		}).error(function(){
   			console.log('signup error');
