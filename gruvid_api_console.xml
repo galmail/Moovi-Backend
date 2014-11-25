@@ -110,13 +110,28 @@
           <param name="Content-Type" required="true" type="xsd:string" style="header" default="application/json"></param>
           <param name="Accept" required="true" type="xsd:string" style="header" default="application/json"></param>
           <param name="title" required="true" type="xsd:string" style="query" default=""></param>
-          <param name="receiver_id" required="true" type="xsd:integer" style="query" default=""></param>
+          <param name="receiver_id" required="false" type="xsd:integer" style="query" default=""></param>
           <method id="create_video" name="POST" apigee:displayName="Create Video">
               <apigee:tags>
                   <apigee:tag primary="true">Videos</apigee:tag>
               </apigee:tags>
               <apigee:authentication required="true"/>
               <doc apigee:url="http://api.mydomain.com/doc/my-method">create_video</doc>
+          </method>
+      </resource>
+      
+      <!-- update_video -->
+      <resource path="/api/v1/videos/:id">
+          <param name="Content-Type" required="true" type="xsd:string" style="header" default="application/json"></param>
+          <param name="Accept" required="true" type="xsd:string" style="header" default="application/json"></param>
+          <param name="title" required="true" type="xsd:string" style="query" default=""></param>
+          <param name="receiver_id" required="false" type="xsd:integer" style="query" default=""></param>
+          <method id="update_video" name="PUT" apigee:displayName="Update Video">
+              <apigee:tags>
+                  <apigee:tag primary="true">Videos</apigee:tag>
+              </apigee:tags>
+              <apigee:authentication required="true"/>
+              <doc apigee:url="http://api.mydomain.com/doc/my-method">update_video</doc>
           </method>
       </resource>
       
@@ -148,6 +163,64 @@
               <doc apigee:url="http://api.mydomain.com/doc/my-method">create_clip</doc>
           </method>
       </resource>
+      
+      <!-- update_clip -->
+      <resource path="/api/v1/clips/:id">
+          <param name="Content-Type" required="true" type="xsd:string" style="header" default="application/json"></param>
+          <param name="Accept" required="true" type="xsd:string" style="header" default="application/json"></param>
+          <param name="url" required="false" type="xsd:string" style="query" default=""></param>
+          <method id="update_clip" name="PUT" apigee:displayName="Update Clip">
+              <apigee:tags>
+                  <apigee:tag primary="true">Clips</apigee:tag>
+              </apigee:tags>
+              <apigee:authentication required="true"/>
+              <doc apigee:url="http://api.mydomain.com/doc/my-method">update_clip</doc>
+          </method>
+      </resource>
+      
+      <!-- ##################### GROUPS ##################### -->
+      
+      <!-- get_groups -->
+      <resource path="/api/v1/groups">
+         <param name="Content-Type" required="true" type="xsd:string" style="header" default="application/json" />
+         <param name="Accept" required="true" type="xsd:string" style="header" default="application/json" />
+         <method id="get_groups" name="GET" apigee:displayName="Get Groups">
+            <apigee:tags>
+               <apigee:tag primary="true">Groups</apigee:tag>
+            </apigee:tags>
+            <apigee:authentication required="true" />
+            <doc apigee:url="http://api.mydomain.com/doc/my-method">get_groups</doc>
+         </method>
+      </resource>
+      
+      <!-- create_group -->
+      <resource path="/api/v1/groups">
+          <param name="Content-Type" required="true" type="xsd:string" style="header" default="application/json"></param>
+          <param name="Accept" required="true" type="xsd:string" style="header" default="application/json"></param>
+          <param name="video_id" required="true" type="xsd:string" style="query" default=""></param>
+          <method id="create_group" name="POST" apigee:displayName="Create Group">
+              <apigee:tags>
+                  <apigee:tag primary="true">Groups</apigee:tag>
+              </apigee:tags>
+              <apigee:authentication required="true"/>
+              <doc apigee:url="http://api.mydomain.com/doc/my-method">create_group</doc>
+          </method>
+      </resource>
+      
+      <!-- update_group -->
+      <resource path="/api/v1/groups/:id">
+          <param name="Content-Type" required="true" type="xsd:string" style="header" default="application/json"></param>
+          <param name="Accept" required="true" type="xsd:string" style="header" default="application/json"></param>
+          <method id="update_group" name="PUT" apigee:displayName="Update Group">
+              <apigee:tags>
+                  <apigee:tag primary="true">Groups</apigee:tag>
+              </apigee:tags>
+              <apigee:authentication required="true"/>
+              <doc apigee:url="http://api.mydomain.com/doc/my-method">update_group</doc>
+          </method>
+      </resource>
+      
+      
       
    </resources>
 </application>

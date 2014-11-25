@@ -9,7 +9,7 @@ class Api::V1::VideosController < Api::BaseController
     
     def create
       params.require(:title)
-      video_params = params.permit(:receiver_id, :title)
+      video_params = params.permit(:title,:receiver_id)
       video = Video.new(video_params)
       video.moderator = current_user
       if video.save
@@ -17,6 +17,14 @@ class Api::V1::VideosController < Api::BaseController
       else
         render :json=> video.errors, status: :unprocessable_entity
       end
+    end
+    
+    def update
+      params.require(:id)
+      video_params = params.permit(:title,:receiver_id)
+      video = Video.find(params[:id])
+      video.update_attributes(video_params)
+      render :json => video.as_json, status: :ok
     end
 
 end
