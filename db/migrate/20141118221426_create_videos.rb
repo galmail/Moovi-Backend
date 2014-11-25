@@ -1,7 +1,7 @@
 class CreateVideos < ActiveRecord::Migration
   def change
     create_table :videos, id: :uuid do |t|
-      t.belongs_to  :group
+      t.uuid  :group_id
       t.belongs_to  :moderator, :class_name => 'User'
       t.belongs_to  :receiver, :class_name => 'User'
       

@@ -52,7 +52,7 @@ ActiveRecord::Schema.define(version: 20141123100507) do
 
   create_table "clips", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.integer  "user_id"
-    t.integer  "video_id"
+    t.uuid     "video_id"
     t.string   "url"
     t.string   "message"
     t.datetime "created_at"
@@ -81,7 +81,7 @@ ActiveRecord::Schema.define(version: 20141123100507) do
 
   create_table "groups_users", id: false, force: true do |t|
     t.integer "user_id"
-    t.integer "group_id"
+    t.uuid    "group_id"
   end
 
   create_table "users", force: true do |t|
@@ -114,7 +114,7 @@ ActiveRecord::Schema.define(version: 20141123100507) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
   create_table "videos", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
-    t.integer  "group_id"
+    t.uuid     "group_id"
     t.integer  "moderator_id"
     t.integer  "receiver_id"
     t.string   "title"
