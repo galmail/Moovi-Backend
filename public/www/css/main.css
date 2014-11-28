@@ -7848,12 +7848,31 @@ $ios-transition-box-shadow-end: -200px 0px 200px rgba(0,0,0,0.15), -5px 0px 5px 
 
 /* Edit Video */
 .gv-video-edit {
+  /*
+	ion-content {
+		& > div {
+			height: 100%;
+			& > div {
+				height: 100%;
+			}
+		}
+	}
+	*/
+  /********* SELECT RECEIVER ********/
   /********* BASIC INFO ********/
-  /********* SELECT OCASSION ********/ }
-  .gv-video-edit ion-content > div {
-    height: 100%; }
-    .gv-video-edit ion-content > div > div {
-      height: 100%; }
+  /********* SELECT OCASSION ********/
+  /********* UPLOAD CLIP ********/ }
+  .gv-video-edit .nav-buttons {
+    position: absolute;
+    bottom: 35px;
+    overflow: hidden;
+    width: 100%; }
+    .gv-video-edit .nav-buttons .nav-button {
+      padding: 10px; }
+      .gv-video-edit .nav-buttons .nav-button.next-button {
+        float: right; }
+      .gv-video-edit .nav-buttons .nav-button.previous-button {
+        float: left; }
   .gv-video-edit .slide {
     width: 100%;
     height: 100%; }
@@ -7861,12 +7880,58 @@ $ios-transition-box-shadow-end: -200px 0px 200px rgba(0,0,0,0.15), -5px 0px 5px 
       text-align: center;
       margin-top: 20px;
       margin-bottom: 20px; }
-  .gv-video-edit .basic-info .video-cover .icon {
-    font-size: 70px;
-    display: block;
-    text-align: center;
-    margin-top: 20px;
-    margin-bottom: 10px; }
-  .gv-video-edit .basic-info .video-cover label {
-    display: block;
+    .gv-video-edit .slide .pick-contact-button {
+      text-align: center;
+      margin-bottom: 20px; }
+  .gv-video-edit .progress {
+    height: 20px;
+    margin-bottom: 0;
+    overflow: hidden; }
+    .gv-video-edit .progress .progress-bar {
+      float: left;
+      height: 100%;
+      font-size: 12px;
+      line-height: 20px;
+      color: #fff;
+      text-align: center;
+      background-color: #337ab7;
+      box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+      transition: width 0.6s ease; }
+    .gv-video-edit .progress .progress-bar-info {
+      background-color: #5bc0de; }
+    .gv-video-edit .progress .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      border: 0; }
+  .gv-video-edit .select-receiver .list input {
+    text-align: right; }
+  .gv-video-edit .basic-info .video-cover .cover {
+    width: 100%; }
+  .gv-video-edit .basic-info .video-cover .photoUploadBtn {
     text-align: center; }
+  .gv-video-edit .basic-info .bar {
+    background-color: blue; }
+  .gv-video-edit .select-ocassion .other-ocassion {
+    text-align: right; }
+  .gv-video-edit .select-ocassion .ocassion-date {
+    text-align: right; }
+  .gv-video-edit .upload-clip .video-clip {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    /*
+			background:transparent url('/img/video_not_available.png') no-repeat 0 0; 
+		  -webkit-background-size:cover; 
+		  -moz-background-size:cover; 
+		  -o-background-size:cover; 
+		  background-size:cover;
+		  */ }
+  .gv-video-edit .upload-clip .videoUploadBtn {
+    text-align: center;
+    margin-top: 10px; }

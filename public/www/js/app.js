@@ -24,6 +24,16 @@ gruvid.run(function($ionicPlatform) {
   });
 })
 
+.config(function($sceDelegateProvider) {
+  $sceDelegateProvider.resourceUrlWhitelist([
+    // Allow same origin resource loads.
+    'self',
+    'http://video-js.zencoder.com/oceans-clip.*',
+    // Allow loading from our assets domain.  Notice the difference between * and **.
+    'https://*.s3.amazonaws.com/**'
+  ]);
+})
+
 .config(function(FacebookProvider) {
    var fbAppId = '';
    if(window.location.href.indexOf('localhost')>0){

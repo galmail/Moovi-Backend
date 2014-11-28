@@ -3,7 +3,7 @@
  *
  */
 
-gruvid.controllers.controller('VideoCtrl', function($scope, $stateParams, $http, $ionicBackdrop, $timeout, $ionicLoading) {
+gruvid.controllers.controller('VideoCtrl', function($scope, $stateParams, $http, $ionicBackdrop, $timeout, $ionicLoading, $ionicSlideBoxDelegate, Facebook, Util) {
 
 	$scope.params = $stateParams;
 	$scope.videos = [];
@@ -41,21 +41,85 @@ gruvid.controllers.controller('VideoCtrl', function($scope, $stateParams, $http,
 
 	$scope.loadVideos();
 
-	$scope.pickContact = function(){
+	$scope.pickContact = function(callback){
 		if(navigator.contacts){
-			navigator.contacts.pickContact(function(contact){
-					alert(JSON.stringify(contact));
-	        console.log('The following contact has been selected:' + JSON.stringify(contact));
-	    },function(err){
-	        console.log('Error: ' + err);
-	    });
+			navigator.contacts.pickContact(callback);
 		}
 		else {
 			alert('Download the app to select from contact list');
 		}
 	};
 
-	$scope.videoData = {};
+	$scope.selectReceiverFromContactList = function(){
+		$scope.pickContact(function(contact){
+			alert(JSON.stringify(contact));
+		});
+	};
+
+	$scope.addContactToGroup = function(){
+		$scope.pickContact(function(contact){
+
+		});
+	};
+
+	$scope.showOtherOcassion = function(){
+		if(!$scope._otherOcassion){
+			$scope._otherOcassion=true;
+			$scope.videoData.ocassion.name='';
+		}
+		$scope._otherOcassionColor = 'color:black;';
+	};
+
+	$scope.hideOtherOcassion = function(){
+		$scope._otherOcassionColor = 'color:white;';
+		$scope._otherOcassion=false;
+	};
+	$scope.hideOtherOcassion();	
+
+	$scope.firstSlide = function(){
+		return ($ionicSlideBoxDelegate.currentIndex() == 0);
+	};
+
+	$scope.lastSlide = function(){
+		return ($ionicSlideBoxDelegate.slidesCount()-$ionicSlideBoxDelegate.currentIndex()==1);
+	};
+
+	$scope.nextSlide = function(){
+		$ionicSlideBoxDelegate.next();
+	};
+
+	$scope.previousSlide = function(){
+		$ionicSlideBoxDelegate.previous();
+	};
+
+
+	$scope.coverMaxHeight = window.innerWidth + 'px';
+	
+	$scope.videoData = {
+		id: Util.generateUUID(),
+		cover: '/img/image_not_available.jpg',
+		clip: null,
+		ocassion: {
+			name: 'Birthday',
+			date: '12/12/2014'
+		},
+		receiver: {
+			first_name: null,
+			last_name: null,
+			email: null,
+			gender: 'M',
+			birthdate: null
+		},
+		participants: [
+			{ first_name: null, last_name: null, email: null, mobile: null }
+		]
+	};
+
+	$scope.videoClipCover = '/img/video_not_available.png';
+	$scope.uploadCompleteCallback = function(){
+		if($scope.videoData.clip)
+			$scope.videoClipCover = '/img/play.jpg';
+	};
 
 	$scope.saveVideo = function(){
 		console.log('saveVideo');
@@ -68,19 +132,6 @@ gruvid.controllers.controller('VideoCtrl', function($scope, $stateParams, $http,
 			alert('Could not save video!');
 		});
 	};
-
-
-
-
-
-
-
-
-
-
-
-  	
-
 
   	  
 

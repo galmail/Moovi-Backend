@@ -1,0 +1,14 @@
+<div class="upload-wrap">
+  
+	<button ng-hide="progress > 0 && progress < 100" class="button {{ buttonStyle }}">{{ buttonName }}</button>
+
+  <div class="progress" ng-if="progress > 0 && progress < 100">
+	  <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="{{ progress }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ progress }}%;">
+	    {{ progress }}%
+	  </div>
+	</div>
+
+  <input type="file" style="display: none" accept="{{ filetype }}"/>
+
+</div>
+
