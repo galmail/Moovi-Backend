@@ -106,13 +106,19 @@
 		    	<h4>Invite people to join</h4>
 
 		    	<div class="pick-contact-button">
-		    		<button class="button button-light icon-left ion-person-add" ng-click="addContactToGroup()">Choose Contact</button>
+		    		<button class="button button-light icon-left ion-person-add" ng-click="addContactToGroup()">Add Person</button>
+		    		<button class="button button-light icon-left ion-android-add-contact" ng-click="pickContactToGroup()">Pick Contact</button>
 		    	</div>
 
 		    	<ul class="list">
-    				<li class="item">Person 1</li>
-    				<li class="item">Person 2</li>
+    				<li ng-hide="person.hidden" ng-click="openContactDetails($index)" ng-repeat="person in participants" class="item">
+    					{{ person.first_name }} {{ person.last_name }}
+    				</li>
   				</ul>
+
+  				<div class="send-group-invitations-button" ng-if="participants.length>0">
+  					<button class="button icon-left ion-android-friends" ng-click="inviteGroup()">Send Invitations</button>
+  				</div>
 
 		    </div>
 		  </ion-slide>
@@ -120,7 +126,7 @@
 		  <!-- ************* Basic Info ************* -->
 		  <ion-slide>
 		    <div class="slide basic-info">
-		    	<h4>Basic Info</h4>
+		    	<h4>Video Title and Cover</h4>
 
 		    	<div class="list">
 					  <div class="video-title">
@@ -133,12 +139,17 @@
 						  <div class="photoUploadBtn" s3-upload bucket="'gruvid-test'" ng-model="videoData.cover" s3-upload-options="{submitOnChange: true, getOptionsUri: '/api/v1/s3_token.json?ftype=photo', folder: 'videos/{{videoData.id}}/', fileType: 'image', buttonName: 'Upload Video Cover', buttonStyle: 'icon-left ion-upload button-positive '}">
 							</div>
 						</div>
-						<!-- <div>
-					    <debug val="videoData"></debug>
-					  </div> -->
 		    	</div>
 		    </div>
 		  </ion-slide>
+
+
+		  <!-- <ion-slide>
+		  	<div>
+			    <debug val="videoData"></debug>
+			  </div>
+		  </ion-slide> -->
+		    
 		  
 		  
 		  

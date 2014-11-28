@@ -7847,17 +7847,10 @@ $ios-transition-box-shadow-end: -200px 0px 200px rgba(0,0,0,0.15), -5px 0px 5px 
     background-image: url('https://fbcdn-sphotos-f-a.akamaihd.net/hphotos-ak-xpa1/v/t1.0-9/10686756_10152417889592914_5820011321176316949_n.jpg?oh=378954c62349edbafa73ce41a0c78c96&oe=55200226&__gda__=1427141424_ad3d3a480af330ef2c41c73386dfb378'); }
 
 /* Edit Video */
+.modal-participant .participant-buttons {
+  padding: 10px; }
+
 .gv-video-edit {
-  /*
-	ion-content {
-		& > div {
-			height: 100%;
-			& > div {
-				height: 100%;
-			}
-		}
-	}
-	*/
   /********* SELECT RECEIVER ********/
   /********* BASIC INFO ********/
   /********* SELECT OCASSION ********/
@@ -7883,6 +7876,8 @@ $ios-transition-box-shadow-end: -200px 0px 200px rgba(0,0,0,0.15), -5px 0px 5px 
     .gv-video-edit .slide .pick-contact-button {
       text-align: center;
       margin-bottom: 20px; }
+    .gv-video-edit .slide .send-group-invitations-button {
+      text-align: center; }
   .gv-video-edit .progress {
     height: 20px;
     margin-bottom: 0;
@@ -7920,10 +7915,13 @@ $ios-transition-box-shadow-end: -200px 0px 200px rgba(0,0,0,0.15), -5px 0px 5px 
     text-align: right; }
   .gv-video-edit .select-ocassion .ocassion-date {
     text-align: right; }
+  .gv-video-edit .select-ocassion .placeholder-icon:first-child {
+    padding-right: 20px; }
   .gv-video-edit .upload-clip .video-clip {
     width: 100%;
     margin-left: auto;
     margin-right: auto;
+    margin-bottom: 20px;
     display: block;
     /*
 			background:transparent url('/img/video_not_available.png') no-repeat 0 0; 

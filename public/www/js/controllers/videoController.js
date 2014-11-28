@@ -3,7 +3,7 @@
  *
  */
 
-gruvid.controllers.controller('VideoCtrl', function($scope, $stateParams, $http, $ionicBackdrop, $timeout, $ionicLoading, $ionicSlideBoxDelegate, Facebook, Util) {
+gruvid.controllers.controller('VideoCtrl', function($scope, $stateParams, $ionicModal, filterFilter, $http, $ionicBackdrop, $timeout, $ionicLoading, $ionicSlideBoxDelegate, Facebook, Util, User) {
 
 	$scope.params = $stateParams;
 	$scope.videos = [];
@@ -15,10 +15,10 @@ gruvid.controllers.controller('VideoCtrl', function($scope, $stateParams, $http,
     }, 1000);
   };
 
-  $scope.show = function(){
-    $ionicLoading.show({
-      template: 'Loading...'
-    });
+  $scope.show = function(msg){
+  	var tpl = {};
+  	tpl.template = msg || 'Loading...';
+    $ionicLoading.show(tpl);
   };
 
   $scope.hide = function(){
@@ -56,12 +56,6 @@ gruvid.controllers.controller('VideoCtrl', function($scope, $stateParams, $http,
 		});
 	};
 
-	$scope.addContactToGroup = function(){
-		$scope.pickContact(function(contact){
-
-		});
-	};
-
 	$scope.showOtherOcassion = function(){
 		if(!$scope._otherOcassion){
 			$scope._otherOcassion=true;
@@ -94,10 +88,10 @@ gruvid.controllers.controller('VideoCtrl', function($scope, $stateParams, $http,
 
 
 	$scope.coverMaxHeight = window.innerWidth + 'px';
-	
+	$scope.participants = [];
 	$scope.videoData = {
 		id: Util.generateUUID(),
-		cover: '/img/image_not_available.jpg',
+		cover: 'img/image_not_available.jpg',
 		clip: null,
 		ocassion: {
 			name: 'Birthday',
@@ -110,25 +104,88 @@ gruvid.controllers.controller('VideoCtrl', function($scope, $stateParams, $http,
 			gender: 'M',
 			birthdate: null
 		},
-		participants: [
-			{ first_name: null, last_name: null, email: null, mobile: null }
-		]
+		people: filterFilter($scope.participants,{hidden: false})
 	};
 
-	$scope.videoClipCover = '/img/video_not_available.png';
+	$scope.videoClipCover = 'img/video_not_available.png';
 	$scope.uploadCompleteCallback = function(){
 		if($scope.videoData.clip)
-			$scope.videoClipCover = '/img/play.jpg';
+			$scope.videoClipCover = 'img/play.jpg';
+	};
+
+	// Create the participant modal
+  $ionicModal.fromTemplateUrl('js/templates/participant.html', {
+    scope: $scope
+  }).then(function(modal) {
+    $scope.modal = modal;
+  });
+
+	$scope.openContactDetails = function(i){
+		$scope.selectedParticipantIndex = i;
+		$scope.selectedParticipant = angular.copy($scope.participants[i]);
+		$scope.modal.show();
+	};
+
+	$scope.closeContactDetails = function(){
+		$scope.modal.hide();
+	};
+
+	$scope.saveContactDetails = function(){
+		// validate email first
+		if(!Util.validateEmail($scope.selectedParticipant.email)){
+			alert('Not a valid email');
+			return false;
+		}
+		if($scope.selectedParticipantIndex == -1){
+			$scope.participants.unshift($scope.selectedParticipant);
+		}
+		else {
+			$scope.participants[$scope.selectedParticipantIndex] = $scope.selectedParticipant;
+		}
+		$scope.closeContactDetails();
+	};
+
+	$scope.removeContactFromGroup = function(){
+		$scope.participants[$scope.selectedParticipantIndex].hidden = true;
+		$scope.closeContactDetails();
+	};
+
+	$scope.pickContactToGroup = function(){
+		$scope.pickContact(function(contact){
+			alert(JSON.stringify(contact));
+		});
+	};
+
+	$scope.addContactToGroup = function(){
+		$scope.selectedParticipantIndex = -1;
+		$scope.selectedParticipant = { hidden: false };
+		$scope.modal.show();
+	};
+
+	$scope.inviteGroup = function(){
+		console.log('invite group');
+		var people = filterFilter($scope.participants,{hidden: false});
+		//User.inviteGroup(people);
+	};
+
+	$scope.sendInvitationToContact = function(){
+		console.log('sendInvitationToContact');
+		//User.inviteContact($scope.selectedParticipant);
+		$scope.closeContactDetails();
 	};
 
 	$scope.saveVideo = function(){
 		console.log('saveVideo');
-		console.log($scope.videoData.title);
+		$scope.videoData.people = filterFilter($scope.participants,{hidden: false});
+		
+		$scope.show('Saving Video...');
 		$http.post('/api/v1/videos.json', $scope.videoData)
 		.success(function(){
+			$scope.hide();
 			alert('Video Saved Successfully!');
 		})
 		.error(function(){
+			$scope.hide();
 			alert('Could not save video!');
 		});
 	};
