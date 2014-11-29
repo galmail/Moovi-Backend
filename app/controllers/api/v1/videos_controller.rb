@@ -8,7 +8,7 @@ class Api::V1::VideosController < Api::BaseController
     end
     
     def create
-      params.require(:title)
+      # params.require(:title)
       video_params = params.permit(:title,:receiver_id)
       video = Video.new(video_params)
       video.moderator = current_user

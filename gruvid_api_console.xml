@@ -18,6 +18,7 @@
          <param name="gender" required="false" type="xsd:string" style="query" />
          <param name="locale" required="false" type="xsd:string" style="query" />
          <param name="fb_id" required="false" type="xsd:string" style="query" />
+         <param name="guest" required="false" type="xsd:boolean" style="query" />
          
          <param name="device_uid" required="false" type="xsd:string" style="query" />
          <param name="device_brand" required="false" type="xsd:string" style="query" />
@@ -109,7 +110,7 @@
       <resource path="/api/v1/videos">
           <param name="Content-Type" required="true" type="xsd:string" style="header" default="application/json"></param>
           <param name="Accept" required="true" type="xsd:string" style="header" default="application/json"></param>
-          <param name="title" required="true" type="xsd:string" style="query" default=""></param>
+          <param name="title" required="false" type="xsd:string" style="query" default=""></param>
           <param name="receiver_id" required="false" type="xsd:integer" style="query" default=""></param>
           <method id="create_video" name="POST" apigee:displayName="Create Video">
               <apigee:tags>
@@ -124,7 +125,7 @@
       <resource path="/api/v1/videos/:id">
           <param name="Content-Type" required="true" type="xsd:string" style="header" default="application/json"></param>
           <param name="Accept" required="true" type="xsd:string" style="header" default="application/json"></param>
-          <param name="title" required="true" type="xsd:string" style="query" default=""></param>
+          <param name="title" required="false" type="xsd:string" style="query" default=""></param>
           <param name="receiver_id" required="false" type="xsd:integer" style="query" default=""></param>
           <method id="update_video" name="PUT" apigee:displayName="Update Video">
               <apigee:tags>
@@ -220,6 +221,20 @@
           </method>
       </resource>
       
+      <!-- ##################### EVENTS ##################### -->
+      
+      <!-- get_events -->
+      <resource path="/api/v1/events">
+         <param name="Content-Type" required="true" type="xsd:string" style="header" default="application/json" />
+         <param name="Accept" required="true" type="xsd:string" style="header" default="application/json" />
+         <method id="get_events" name="GET" apigee:displayName="Get Events">
+            <apigee:tags>
+               <apigee:tag primary="true">Events</apigee:tag>
+            </apigee:tags>
+            <apigee:authentication required="true" />
+            <doc apigee:url="http://api.mydomain.com/doc/my-method">get_events</doc>
+         </method>
+      </resource>
       
       
    </resources>
