@@ -13,7 +13,7 @@ class RegistrationsController < Devise::RegistrationsController
         device.user_id = user.id
         device.save
       end
-      UserNotifier.send_signup_email(user).deliver
+      UserNotifier.send_signup_email(user).deliver unless user.guest
       user.save
       render :json => user.as_json(:auth_token=>user.authentication_token, :email=>user.email), status: :created
     else
@@ -34,7 +34,7 @@ class RegistrationsController < Devise::RegistrationsController
     params[:first_name] = URI.unescape(params[:first_name]) if params[:first_name].present?
     params[:last_name] = URI.unescape(params[:last_name]) if params[:last_name].present?
     params[:date_of_birth] = params[:birthday] if params[:birthday].present?
-    params.permit(:fb_id,:email,:password,:name,:first_name,:last_name,:gender,:locale,:photo_url,:date_of_birth)
+    params.permit(:fb_id,:email,:password,:name,:first_name,:last_name,:gender,:locale,:photo_url,:date_of_birth,:guest,:invited_by)
   end
   
   def device_params

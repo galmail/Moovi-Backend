@@ -4,7 +4,7 @@
 #
 #  id         :uuid             not null, primary key
 #  user_id    :integer
-#  video_id   :integer
+#  video_id   :uuid
 #  url        :string(255)
 #  message    :string(255)
 #  created_at :datetime

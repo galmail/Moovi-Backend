@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Hi <%= @to_user.name %>!</h1>
+    <br/>
+    <p>
+    	<%= @from_user.name %> has invited you to create a special video for <%= @video.receiver.name %>.<br/>
+    	<br/>
+    	All you need to do is to <a href="<%= @video_link %>">click here</a> and record a 20sec video message for his/her <%= @video.event.name%>
+    	that will be celebrated on <%= @video.event_celebration_date %>.<br/>
+    	<br/>
+    	Don't forget to create your video clip before <%= @video.clips_submission_deadline %> to make sure it
+    	will be included in the video.<br/>
+    	<br/>
+    	Gruvid will automagically render all the video clips received and will send you by email the link to the video when it's ready.<br/>
+    	<br/>
+    	Go make something awesome!<br/>
+    	<br/>
+    	The Gruvid Team
+    </p>
+  </body>
+</html>

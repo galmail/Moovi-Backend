@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141123100507) do
+ActiveRecord::Schema.define(version: 20141129195053) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -72,6 +72,15 @@ ActiveRecord::Schema.define(version: 20141123100507) do
     t.datetime "updated_at"
   end
 
+  create_table "events", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.string   "name"
+    t.string   "pic_url"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "custom",     default: false
+    t.boolean  "active",     default: true
+  end
+
   create_table "groups", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.string   "name"
     t.string   "description"
@@ -85,12 +94,12 @@ ActiveRecord::Schema.define(version: 20141123100507) do
   end
 
   create_table "users", force: true do |t|
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
+    t.string   "email",                  default: "",    null: false
+    t.string   "encrypted_password",     default: "",    null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
+    t.integer  "sign_in_count",          default: 0,     null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -107,6 +116,8 @@ ActiveRecord::Schema.define(version: 20141123100507) do
     t.string   "last_name"
     t.string   "gender"
     t.string   "locale"
+    t.integer  "invited_by_id"
+    t.boolean  "guest",                  default: false
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", using: :btree
@@ -124,7 +135,10 @@ ActiveRecord::Schema.define(version: 20141123100507) do
     t.string   "receiver_mobile"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "ready",           default: false
+    t.boolean  "ready",                     default: false
+    t.uuid     "event_id"
+    t.date     "event_celebration_date"
+    t.datetime "clips_submission_deadline"
   end
 
 end

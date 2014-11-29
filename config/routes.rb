@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :videos, defaults: {format: :json}
       resources :clips, defaults: {format: :json}
+      resources :events, defaults: {format: :json}
       
       # resources :users, defaults: {format: :json} do
         # post  'block'

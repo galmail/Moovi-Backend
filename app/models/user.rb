@@ -25,6 +25,8 @@
 #  last_name              :string(255)
 #  gender                 :string(255)
 #  locale                 :string(255)
+#  invited_by_id          :integer
+#  guest                  :boolean          default(FALSE)
 #
 
 class User < ActiveRecord::Base
