@@ -6,20 +6,39 @@ class Api::V1::GroupsController < Api::BaseController
     
     def create
       params.require(:video_id)
-      video = Video.find(:video_id)
-      if !video.group.nil?
-        render :json=> video.group.as_json, status: :ok
-      else
+      params.require(:people)
+      video = Video.find(params[:video_id])
+      if video.group.nil?
+        # create group
         group = Group.new()
         group.name = "Group - #{video.title}"
-        if group.save
-          video.group_id = group.id
-          video.save
-          render :json=> group.as_json, status: :created
-        else
-          render :json=> group.errors, status: :unprocessable_entity
-        end
+        group.save
+        video.group_id = group.id
+        video.save
       end
+      
+      # add users to the group
+      group.users = []
+      participants = params[:people]
+      participants.each { |person|
+        user = User.find_by_email(person[:email])
+        if user.nil?
+          user = User.new(person)
+          user.password = "123456789"
+          user.guest = true
+          user.save
+        else
+          if user.guest
+            user.first_name = person[:first_name]
+            user.last_name = person[:last_name]
+            user.save
+          end
+        end
+        group.users << user
+      }
+      group.save
+      render :json=> group.as_json, status: :created
+      #render :json=> group.errors, status: :unprocessable_entity
     end
     
     # def update
