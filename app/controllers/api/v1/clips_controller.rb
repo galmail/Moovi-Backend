@@ -1,8 +1,14 @@
 class Api::V1::ClipsController < Api::BaseController
+  
+    before_filter :authenticate_user!, except: :upload_guest_clip
     
     def index
       clips_i_made = Clip.where(["user_id = ?",current_user.id])
       @clips = clips_i_made
+    end
+    
+    def upload_guest_clip
+      render :json=> { id: 'aaa' }, status: :created
     end
     
     def create

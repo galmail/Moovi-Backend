@@ -12,7 +12,9 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :videos, defaults: {format: :json}
-      resources :clips, defaults: {format: :json}
+      resources :clips, defaults: {format: :json} do
+        post  'upload_guest_clip'
+      end
       resources :events, defaults: {format: :json}
       resources :groups, defaults: {format: :json}
       
