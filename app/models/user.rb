@@ -37,8 +37,9 @@ class User < ActiveRecord::Base
          # :confirmable, :lockable, :timeoutable and :omniauthable
 
   has_and_belongs_to_many :groups
-  has_many  :videos
-  has_many  :clips
-  has_many  :devices
+  has_many    :videos
+  has_many    :clips
+  has_many    :devices
+  belongs_to  :invited_by, :class_name => 'User'
   
 end
