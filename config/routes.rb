@@ -14,6 +14,7 @@ Rails.application.routes.draw do
       resources :videos, defaults: {format: :json}
       resources :clips, defaults: {format: :json}
       resources :events, defaults: {format: :json}
+      resources :groups, defaults: {format: :json}
       
       # resources :users, defaults: {format: :json} do
         # post  'block'
