@@ -5,6 +5,7 @@ class RegistrationsController < Devise::RegistrationsController
   def new
     verify_params
     user = User.new(user_params)
+    user.update_default_fields
     if user.save
       user.password = user.authentication_token unless params.has_key?(:password)
       if params.has_key?(:device_uid)
