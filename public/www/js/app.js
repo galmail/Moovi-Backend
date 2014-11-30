@@ -28,9 +28,13 @@ gruvid.run(function($ionicPlatform) {
   $sceDelegateProvider.resourceUrlWhitelist([
     // Allow same origin resource loads.
     'self',
-    'http://video-js.zencoder.com/oceans-clip.*',
     // Allow loading from our assets domain.  Notice the difference between * and **.
     'https://*.s3.amazonaws.com/**'
+  ]);
+
+  // The blacklist overrides the whitelist so the open redirect here is blocked.
+  $sceDelegateProvider.resourceUrlBlacklist([
+    
   ]);
 })
 
@@ -65,7 +69,8 @@ gruvid.run(function($ionicPlatform) {
     }
   })
   .state('app.previewVideo', {
-    url: "/videos/:videoId",
+    action: 'show',
+    url: "/show-video/:videoId",
     views: {
       'menuContent' :{
         templateUrl: "js/templates/video-preview.html",
@@ -73,8 +78,9 @@ gruvid.run(function($ionicPlatform) {
       }
     }
   })
-  .state('app.createVideo', {
-    url: "/create-video",
+  .state('app.editVideo', {
+    action: 'edit',
+    url: "/edit-video/:videoId",
     views: {
       'menuContent' :{
         templateUrl: "js/templates/video-edit.html",
@@ -83,7 +89,8 @@ gruvid.run(function($ionicPlatform) {
     }
   })
   .state('app.joinVideo', {
-    url: "/join-video",
+    action: 'join',
+    url: "/join-video/:videoId/:userId",
     views: {
       'menuContent' :{
         templateUrl: "js/templates/join-video.html"

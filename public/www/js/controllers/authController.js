@@ -3,7 +3,7 @@
  *
  */
 
-gruvid.controllers.controller('AuthCtrl', function($scope, $ionicModal, $timeout, Facebook, User) {
+gruvid.controllers.controller('AuthCtrl', function($scope, $ionicModal, $timeout, $http, Facebook, User) {
 
     /******** Facebook Part ********/
 

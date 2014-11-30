@@ -7933,3 +7933,20 @@ $ios-transition-box-shadow-end: -200px 0px 200px rgba(0,0,0,0.15), -5px 0px 5px 
   .gv-video-edit .upload-clip .videoUploadBtn {
     text-align: center;
     margin-top: 10px; }
+
+/* Settings Style */
+.gv-settings .profile {
+  clear: both;
+  overflow: hidden; }
+  .gv-settings .profile .left {
+    float: left;
+    width: 30%; }
+    .gv-settings .profile .left img {
+      height: 86px;
+      margin-left: auto;
+      margin-right: auto;
+      display: block;
+      margin-top: 2px; }
+  .gv-settings .profile .right {
+    float: right;
+    width: 70%; }

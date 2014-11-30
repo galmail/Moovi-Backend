@@ -52,29 +52,14 @@
 		    <div class="slide select-ocassion">
 		    	<h4>Select Ocassion</h4>
 		    	<div class="list">
-					  <label class="item item-radio" ng-click="hideOtherOcassion()">
-					    <input type="radio" name="group" ng-model="videoData.ocassion.name" value="Birthday">
-					    <div class="item-content">Birthday</div>
-					    <i class="radio-icon ion-checkmark"></i>
-					  </label>
-					  <label class="item item-radio" ng-click="hideOtherOcassion()">
-					    <input type="radio" name="group" ng-model="videoData.ocassion.name" value="New Year">
-					    <div class="item-content">New Year</div>
-					    <i class="radio-icon ion-checkmark"></i>
-					  </label>
-					  <label class="item item-radio" ng-click="hideOtherOcassion()">
-					    <input type="radio" name="group" ng-model="videoData.ocassion.name" value="Graduation">
-					    <div class="item-content">Graduation</div>
-					    <i class="radio-icon ion-checkmark"></i>
-					  </label>
-					  <label class="item item-radio" ng-click="hideOtherOcassion()">
-					    <input type="radio" name="group" ng-model="videoData.ocassion.name" value="Anniversary">
-					    <div class="item-content">Anniversary</div>
+					  <label ng-repeat="event in events" class="item item-radio" ng-click="hideOtherOcassion(event)">
+					    <input type="radio" name="group" ng-model="videoData.ocassion.eventId" value="{{event.id}}">
+					    <div class="item-content">{{ event.name }}</div>
 					    <i class="radio-icon ion-checkmark"></i>
 					  </label>
 					  <label class="item item-input" ng-click="showOtherOcassion()">
 					    <span class="input-label">Other</span>
-					    <input class="other-ocassion" type="text" ng-model="videoData.ocassion.name" style="{{ _otherOcassionColor }}">
+					    <input class="other-ocassion" type="text" ng-model="videoData.ocassion.eventName" style="{{ _otherOcassionColor }}">
 					  </label>
 				  </div>
 
@@ -82,7 +67,7 @@
 				  	<label class="item item-input">
 					  	<i class="icon ion-calendar placeholder-icon"></i>
 					  	<span class="input-label">Ocassion Date</span>
-					    <input class="ocassion-date" type="date" ng-model="videoData.ocassion.date"/>
+					    <input class="ocassion-date" type="date" ng-model="videoData.ocassion.eventDate"/>
 					  </label>
 					</div>
 		    </div>
@@ -111,12 +96,12 @@
 		    	</div>
 
 		    	<ul class="list">
-    				<li ng-hide="person.hidden" ng-click="openContactDetails($index)" ng-repeat="person in participants" class="item">
+    				<li ng-hide="person.hidden" ng-click="openContactDetails($index)" ng-repeat="person in videoData.participants" class="item">
     					{{ person.first_name }} {{ person.last_name }}
     				</li>
   				</ul>
 
-  				<div class="send-group-invitations-button" ng-if="participants.length>0">
+  				<div class="send-group-invitations-button" ng-if="videoData.participants.length>0">
   					<button class="button icon-left ion-android-friends" ng-click="inviteGroup()">Send Invitations</button>
   				</div>
 

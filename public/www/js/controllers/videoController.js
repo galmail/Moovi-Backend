@@ -3,43 +3,65 @@
  *
  */
 
-gruvid.controllers.controller('VideoCtrl', function($scope, $stateParams, $ionicModal, filterFilter, $http, $ionicBackdrop, $timeout, $ionicLoading, $ionicSlideBoxDelegate, Facebook, Util, User) {
+gruvid.controllers.controller('VideoCtrl', function($ionicViewService, $scope, $state, $stateParams, $ionicModal, $http, $ionicBackdrop, $timeout, $ionicSlideBoxDelegate, filterFilter, Facebook, Util, User, Video, Event, Group) {
 
-	$scope.params = $stateParams;
 	$scope.videos = [];
 
-  $scope.action = function(){
-    $ionicBackdrop.retain();
-    $timeout(function(){
-      $ionicBackdrop.release();
-    }, 1000);
-  };
-
-  $scope.show = function(msg){
-  	var tpl = {};
-  	tpl.template = msg || 'Loading...';
-    $ionicLoading.show(tpl);
-  };
-
-  $scope.hide = function(){
-    $ionicLoading.hide();
-  };
-
-	$scope.loadVideos = function(){
-		//$scope.show();
-		$http.get('/api/v1/videos.json').success(function(data){
-			$scope.videos = data;
-			if(data){
-				console.log('Fetched videos: ' + JSON.stringify(data));
-			}
-			else {
-				console.log('no videos available...');
-			}
-			//$scope.hide();
-		});
+	$scope.coverMaxHeight = window.innerWidth + 'px';
+	$scope.videoData = {
+		id: $stateParams.videoId,
+		receiver: {
+			first_name: null,
+			last_name: null,
+			email: null,
+			gender: 'M',
+			birthdate: null
+		},
+		ocassion: {
+			eventId: null,
+			eventName: 'Birthday',
+			eventDate: null,
+			customEvent: false
+		},
+		cover: 'img/image_not_available.jpg',
+		clip: null,
+		participants: []
 	};
 
-	$scope.loadVideos();
+  // $scope.action = function(){
+  //   $ionicBackdrop.retain();
+  //   $timeout(function(){
+  //     $ionicBackdrop.release();
+  //   }, 1000);
+  // };
+
+
+  if($state.current.action == 'show'){
+		
+	}
+	else if($state.current.action == 'edit'){
+		Event.loadEvents(function(events){
+			$scope.events = events;
+		});
+	}
+	else {
+		//$scope.loadVideos();
+	}
+
+
+	// $scope.loadVideos = function(){
+	// 	//$scope.show();
+	// 	$http.get('/api/v1/videos.json').success(function(data){
+	// 		$scope.videos = data;
+	// 		if(data){
+	// 			console.log('Fetched videos: ' + JSON.stringify(data));
+	// 		}
+	// 		else {
+	// 			console.log('no videos available...');
+	// 		}
+	// 		//$scope.hide();
+	// 	});
+	// };
 
 	$scope.pickContact = function(callback){
 		if(navigator.contacts){
@@ -59,14 +81,19 @@ gruvid.controllers.controller('VideoCtrl', function($scope, $stateParams, $ionic
 	$scope.showOtherOcassion = function(){
 		if(!$scope._otherOcassion){
 			$scope._otherOcassion=true;
-			$scope.videoData.ocassion.name='';
+			$scope.videoData.ocassion.eventId=null;
+			$scope.videoData.ocassion.customEvent=true;
+			$scope.videoData.ocassion.eventName=null;
 		}
 		$scope._otherOcassionColor = 'color:black;';
 	};
 
-	$scope.hideOtherOcassion = function(){
+	$scope.hideOtherOcassion = function(ev){
 		$scope._otherOcassionColor = 'color:white;';
 		$scope._otherOcassion=false;
+		$scope.videoData.ocassion.customEvent=false;
+		if(ev)
+			$scope.videoData.ocassion.eventName=ev.name;
 	};
 	$scope.hideOtherOcassion();	
 
@@ -86,27 +113,6 @@ gruvid.controllers.controller('VideoCtrl', function($scope, $stateParams, $ionic
 		$ionicSlideBoxDelegate.previous();
 	};
 
-
-	$scope.coverMaxHeight = window.innerWidth + 'px';
-	$scope.participants = [];
-	$scope.videoData = {
-		id: Util.generateUUID(),
-		cover: 'img/image_not_available.jpg',
-		clip: null,
-		ocassion: {
-			name: 'Birthday',
-			date: '12/12/2014'
-		},
-		receiver: {
-			first_name: null,
-			last_name: null,
-			email: null,
-			gender: 'M',
-			birthdate: null
-		},
-		people: filterFilter($scope.participants,{hidden: false})
-	};
-
 	$scope.videoClipCover = 'img/video_not_available.png';
 	$scope.uploadCompleteCallback = function(){
 		if($scope.videoData.clip)
@@ -122,7 +128,7 @@ gruvid.controllers.controller('VideoCtrl', function($scope, $stateParams, $ionic
 
 	$scope.openContactDetails = function(i){
 		$scope.selectedParticipantIndex = i;
-		$scope.selectedParticipant = angular.copy($scope.participants[i]);
+		$scope.selectedParticipant = angular.copy($scope.videoData.participants[i]);
 		$scope.modal.show();
 	};
 
@@ -137,16 +143,16 @@ gruvid.controllers.controller('VideoCtrl', function($scope, $stateParams, $ionic
 			return false;
 		}
 		if($scope.selectedParticipantIndex == -1){
-			$scope.participants.unshift($scope.selectedParticipant);
+			$scope.videoData.participants.unshift($scope.selectedParticipant);
 		}
 		else {
-			$scope.participants[$scope.selectedParticipantIndex] = $scope.selectedParticipant;
+			$scope.videoData.participants[$scope.selectedParticipantIndex] = $scope.selectedParticipant;
 		}
 		$scope.closeContactDetails();
 	};
 
 	$scope.removeContactFromGroup = function(){
-		$scope.participants[$scope.selectedParticipantIndex].hidden = true;
+		$scope.videoData.participants[$scope.selectedParticipantIndex].hidden = true;
 		$scope.closeContactDetails();
 	};
 
@@ -164,8 +170,27 @@ gruvid.controllers.controller('VideoCtrl', function($scope, $stateParams, $ionic
 
 	$scope.inviteGroup = function(){
 		console.log('invite group');
-		var people = filterFilter($scope.participants,{hidden: false});
-		//User.inviteGroup(people);
+		Util.showLoading('Sending Invitations...');
+		// save video first
+		Video.save($scope.videoData,function(ok,msg){
+			if(ok){
+				// send invitations
+				Group.sendInvitations({
+					invite_group: true,
+					video_id: $scope.videoData.id,
+		      people: filterFilter($scope.videoData.participants,{hidden: false})
+				},function(groupId){
+					Util.hideLoading();
+					if(groupId){
+						$scope.videoData.group_id = groupId;
+						alert('Invitations Sent!');
+					}
+					else {
+						alert('Could not send invitations, please check your connection and try again.');
+					}
+				});
+			}
+		});
 	};
 
 	$scope.sendInvitationToContact = function(){
@@ -174,19 +199,55 @@ gruvid.controllers.controller('VideoCtrl', function($scope, $stateParams, $ionic
 		$scope.closeContactDetails();
 	};
 
+  $scope.createNewVideo = function() {
+    // save new video and get videoId from server
+    Util.showLoading('Setting Up Video...');
+    $http.post('/api/v1/videos.json')
+    .success(function(data){
+      Util.hideLoading();
+      var videoId = data.id;
+
+
+
+      var unregisterListener;
+      var listenForStateChange = function () {
+        unregisterListener = $scope.$on('$stateChangeStart', function() {
+          $ionicViewService.nextViewOptions({
+            disableAnimate: true,
+            disableBack: true
+          });
+          unregisterListener();
+        });
+        window.setTimeout(unregisterListener, 300);
+      };
+
+      listenForStateChange();
+      //$state.go('app.editVideo');
+      window.location.href = "#/app/edit-video/" + videoId;
+    })
+    .error(function(data){
+      Util.hideLoading();
+      if(data.error){
+        alert('Please login to create video.');
+      }
+      else {
+        alert('Communication error with the server, please try again in few minutes.');
+      }
+    });
+  };
+
 	$scope.saveVideo = function(){
 		console.log('saveVideo');
-		$scope.videoData.people = filterFilter($scope.participants,{hidden: false});
-		
-		$scope.show('Saving Video...');
-		$http.post('/api/v1/videos.json', $scope.videoData)
-		.success(function(){
-			$scope.hide();
-			alert('Video Saved Successfully!');
-		})
-		.error(function(){
-			$scope.hide();
-			alert('Could not save video!');
+		//$scope.videoData.people = filterFilter($scope.videoData.participants,{hidden: false});
+		Util.showLoading('Saving Video...');
+		Video.save($scope.videoData,function(ok,msg){
+			Util.hideLoading();
+			if(ok){
+				alert('Video Saved Successfully!');
+			}
+			else {
+				alert(msg);
+			}
 		});
 	};
 

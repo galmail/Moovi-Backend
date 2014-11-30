@@ -3,8 +3,11 @@
  *
  */
 
-gruvid.services.factory('Util', function(){
+gruvid.services.factory('Util', function($ionicLoading){
 	return {
+
+		DEFAULT_GUEST_PASSWORD: '123456789',
+
 		generateUUID: function (){
 	    var d = new Date().getTime();
 	    var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -14,9 +17,21 @@ gruvid.services.factory('Util', function(){
 	    });
 	    return uuid;
 		},
+
 		validateEmail: function (email) { 
     	var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     	return re.test(email);
+		},
+
+		showLoading: function(msg){
+			$ionicLoading.show({
+				template: msg || 'Loading...'
+			});
+		},
+
+		hideLoading: function(){
+			$ionicLoading.hide();
 		}
+		
 	};
 });

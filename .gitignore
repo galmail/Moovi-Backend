@@ -14,3 +14,8 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
+
+public/www/lib/ng-s3upload-mobile/node_modules
+public/www/lib/ng-s3upload-mobile/src
+public/www/lib/ng-s3upload-mobile/example
+
