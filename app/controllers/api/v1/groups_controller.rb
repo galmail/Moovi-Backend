@@ -46,13 +46,16 @@ class Api::V1::GroupsController < Api::BaseController
       
       # send invitations
       if params[:invite_group]
-        group.users.each { |user|
-          UserNotifier.send_join_my_video_email(video.moderator,user,video.id).deliver
-        }
+        if video.receiver.nil?
+          render :json=> { error: "The video receiver is missing" }, status: :unprocessable_entity
+          return false
+        else
+          group.users.each { |user|
+            UserNotifier.send_join_my_video_email(video.moderator,user,video.id).deliver
+          }
+        end
       end
-      
       render :json=> group.as_json, status: :created
-      #render :json=> group.errors, status: :unprocessable_entity
     end
     
     # def update
