@@ -32,12 +32,12 @@ class Api::V1::GroupsController < Api::BaseController
             last_name: person[:last_name]
           })
           user.guest = true
-          user.save
+          user.save(:validate => false)
         else
           if user.guest
             user.first_name = person[:first_name]
             user.last_name = person[:last_name]
-            user.save
+            user.save(:validate => false)
           end
         end
         group.users << user
