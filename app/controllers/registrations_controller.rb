@@ -26,7 +26,7 @@ class RegistrationsController < Devise::RegistrationsController
   
   def verify_params
     params.require(:email)
-    params.permit(:email,:password,:name,:first_name,:last_name,:photo_url,:gender,:locale,:fb_id,:date_of_birth,:city,:device_uid,:device_brand,:device_model,:device_os,:device_app_version,:device_mobile_number,:device_location,:device_ip)
+    params.permit(:email,:password,:name,:first_name,:last_name,:photo_url,:gender,:locale,:fb_id,:invited_by,:date_of_birth,:city,:device_uid,:device_brand,:device_model,:device_os,:device_app_version,:device_mobile_number,:device_location,:device_ip)
   end
   
   def user_params
