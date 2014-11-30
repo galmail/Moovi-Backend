@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141129213220) do
+ActiveRecord::Schema.define(version: 20141130105018) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -77,8 +77,9 @@ ActiveRecord::Schema.define(version: 20141129213220) do
     t.string   "pic_url"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "custom",     default: false
-    t.boolean  "active",     default: true
+    t.boolean  "custom",        default: false
+    t.boolean  "active",        default: true
+    t.integer  "created_by_id"
   end
 
   create_table "groups", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
