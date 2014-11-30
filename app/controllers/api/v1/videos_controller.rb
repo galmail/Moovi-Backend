@@ -25,6 +25,11 @@ class Api::V1::VideosController < Api::BaseController
       video = Video.find(params[:id])
       video.update_attributes(video_params)
       
+      if video.title.nil? and !video.receiver.nil? and !video.event.nil?
+        video.title = "#{video.event.name} Video for #{video.receiver.first_name}"
+        video.save
+      end
+      
       if video.status == 'inactive'
         if !video.title.nil? and !video.receiver.nil? and !video.event.nil?
           video.update_attributes({ status: Video.statuses[:pending]})
