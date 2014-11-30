@@ -8,6 +8,7 @@ class Api::V1::GroupsController < Api::BaseController
       params.require(:video_id)
       params.require(:people)
       video = Video.find(params[:video_id])
+      group = nil
       if video.group.nil?
         # create group
         group = Group.new()
@@ -15,6 +16,8 @@ class Api::V1::GroupsController < Api::BaseController
         group.save
         video.group_id = group.id
         video.save
+      else
+        group = video.group
       end
       
       # add users to the group
@@ -28,7 +31,6 @@ class Api::V1::GroupsController < Api::BaseController
             first_name: person[:first_name],
             last_name: person[:last_name]
           })
-          user.password = "123456789"
           user.guest = true
           user.save
         else
