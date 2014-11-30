@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141130111032) do
+ActiveRecord::Schema.define(version: 20141130124148) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -137,6 +137,7 @@ ActiveRecord::Schema.define(version: 20141130111032) do
     t.date     "event_celebration_date"
     t.datetime "clips_submission_deadline"
     t.string   "status",                    default: "INACTIVE"
+    t.string   "cover"
   end
 
 end

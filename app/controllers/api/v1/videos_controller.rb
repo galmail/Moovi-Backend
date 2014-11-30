@@ -21,7 +21,7 @@ class Api::V1::VideosController < Api::BaseController
     
     def update
       params.require(:id)
-      video_params = params.permit(:title,:receiver_id,:event_id,:event_celebration_date)
+      video_params = params.permit(:title,:cover,:receiver_id,:event_id,:event_celebration_date)
       video = Video.find(params[:id])
       video.update_attributes(video_params)
       
@@ -30,8 +30,13 @@ class Api::V1::VideosController < Api::BaseController
         video.save
       end
       
+      if (video.cover.nil? or !video.cover.include?('http')) and !video.event.nil?
+        video.cover = video.event.pic_url
+        video.save
+      end
+      
       if video.status == 'inactive'
-        if !video.title.nil? and !video.receiver.nil? and !video.event.nil?
+        if !video.receiver.nil? and !video.event.nil?
           video.update_attributes({ status: Video.statuses[:pending]})
         end
       end

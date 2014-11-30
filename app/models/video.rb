@@ -14,6 +14,7 @@
 #  event_celebration_date    :date
 #  clips_submission_deadline :datetime
 #  status                    :string(255)      default("INACTIVE")
+#  cover                     :string(255)
 #
 
 class Video < ActiveRecord::Base
