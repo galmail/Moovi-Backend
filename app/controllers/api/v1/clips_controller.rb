@@ -1,4 +1,4 @@
-class Api::V1::ClipsController < ApplicationController
+class Api::V1::ClipsController < Api::BaseController
     before_filter :authenticate_user!, except: :upload_guest_clip
     #skip_before_filter :authenticate_user!, :only => [:upload_guest_clip]
     
