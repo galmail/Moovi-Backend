@@ -30,7 +30,7 @@ class Api::V1::VideosController < Api::BaseController
         video.save
       end
       
-      if (video.cover.nil? or !video.cover.include?('http')) and !video.event.nil?
+      if (video.cover.nil? or !video.cover.include?('http')) and (!video.event.nil? and !video.event.pic_url.nil?)
         video.cover = video.event.pic_url
         video.save
       end
