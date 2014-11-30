@@ -21,7 +21,7 @@ class Api::V1::VideosController < Api::BaseController
     
     def update
       params.require(:id)
-      video_params = params.permit(:title,:receiver_id,:event_id)
+      video_params = params.permit(:title,:receiver_id,:event_id,:event_celebration_date)
       video = Video.find(params[:id])
       video.update_attributes(video_params)
       
