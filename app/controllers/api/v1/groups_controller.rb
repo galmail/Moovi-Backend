@@ -43,6 +43,14 @@ class Api::V1::GroupsController < Api::BaseController
         group.users << user
       }
       group.save
+      
+      # send invitations
+      if params[:invite_group]
+        group.users.each { |user|
+          UserNotifier.send_join_my_video_email(video.moderator,user,video.id).deliver
+        }
+      end
+      
       render :json=> group.as_json, status: :created
       #render :json=> group.errors, status: :unprocessable_entity
     end
