@@ -8,9 +8,6 @@
 #  receiver_id               :integer
 #  title                     :string(255)
 #  url                       :string(255)
-#  receiver_name             :string(255)
-#  receiver_email            :string(255)
-#  receiver_mobile           :string(255)
 #  created_at                :datetime
 #  updated_at                :datetime
 #  event_id                  :uuid

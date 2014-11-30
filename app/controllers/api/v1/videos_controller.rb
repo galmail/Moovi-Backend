@@ -21,9 +21,16 @@ class Api::V1::VideosController < Api::BaseController
     
     def update
       params.require(:id)
-      video_params = params.permit(:title,:receiver_id)
+      video_params = params.permit(:title,:receiver_id,:event_id)
       video = Video.find(params[:id])
       video.update_attributes(video_params)
+      
+      if video.status == 'inactive'
+        if !video.title.nil? and !video.receiver.nil? and !video.event.nil?
+          video.update_attributes({ status: Video.statuses[:pending]})
+        end
+      end
+      
       render :json => video.as_json, status: :ok
     end
 
