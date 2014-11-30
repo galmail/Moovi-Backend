@@ -14,6 +14,7 @@ class SessionsController < Devise::RegistrationsController
         :success => true,
         :id => myuser.id,
         :name => myuser.name,
+        :guest => myuser.guest,
         :email => params[:email],
         :auth_token => myuser.authentication_token,
         :fb_id => myuser.fb_id
