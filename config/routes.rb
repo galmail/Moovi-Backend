@@ -12,9 +12,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :videos, defaults: {format: :json}
-      resources :clips, defaults: {format: :json} do
-        post  'upload_guest_clip'
-      end
+      resources :clips, defaults: {format: :json}
       resources :events, defaults: {format: :json}
       resources :groups, defaults: {format: :json}
       
@@ -29,6 +27,7 @@ Rails.application.routes.draw do
         # post  'authorize_payment'
       #end
       get   's3_token', :controller => 's3_token', :action => 'index'
+      post  'upload_guest_clip', :controller => 'join_video', :action => 'create'
       
     end
   end
