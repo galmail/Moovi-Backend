@@ -3,7 +3,7 @@
  *
  */
 
-gruvid.controllers.controller('VideoCtrl', function($ionicViewService, $scope, $state, $stateParams, $ionicModal, $http, $ionicBackdrop, $timeout, $ionicSlideBoxDelegate, filterFilter, Facebook, Util, User, Video, Event, Group) {
+gruvid.controllers.controller('VideoCtrl', function($ionicViewService, $scope, $state, $stateParams, $ionicModal, $http, $ionicBackdrop, $timeout, $ionicSlideBoxDelegate, filterFilter, Facebook, Util, User, Video, Event, Group, Clip) {
 
 	$scope.videos = [];
 
@@ -43,6 +43,11 @@ gruvid.controllers.controller('VideoCtrl', function($ionicViewService, $scope, $
 		Event.loadEvents(function(events){
 			$scope.events = events;
 		});
+	}
+	else if($state.current.action == 'join'){
+
+
+
 	}
 	else {
 		//$scope.loadVideos();
@@ -115,8 +120,31 @@ gruvid.controllers.controller('VideoCtrl', function($ionicViewService, $scope, $
 
 	$scope.videoClipCover = 'img/video_not_available.png';
 	$scope.uploadCompleteCallback = function(){
-		if($scope.videoData.clip)
-			$scope.videoClipCover = 'img/play.jpg';
+		Util.showLoading('Please wait...');
+		setTimeout(function(){
+			if($scope.videoData.clip){
+				$scope.videoClipCover = 'img/play.jpg';
+				
+				if($state.current.action == 'join'){
+					// upload clip to server
+					Clip.uploadAsGuest({
+						id: $scope.videoData.clipId,
+						url: $scope.videoData.clip,
+						video_id: $stateParams.videoId,
+						user_id: $stateParams.userId
+					},function(clipId){
+						if(clipId){
+							$scope.videoData.clipId = clipId;
+							alert('Clip Uploaded Successfully!');
+						}
+						else {
+							alert('Clip could not be saved, please try again.');
+						}
+					});
+				}
+			}
+			Util.hideLoading();
+		}, 3000);
 	};
 
 	// Create the participant modal

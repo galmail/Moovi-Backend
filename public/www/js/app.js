@@ -93,7 +93,8 @@ gruvid.run(function($ionicPlatform) {
     url: "/join-video/:videoId/:userId",
     views: {
       'menuContent' :{
-        templateUrl: "js/templates/join-video.html"
+        templateUrl: "js/templates/video-join.html",
+        controller: 'VideoCtrl'
       }
     }
   })

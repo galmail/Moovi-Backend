@@ -7934,6 +7934,50 @@ $ios-transition-box-shadow-end: -200px 0px 200px rgba(0,0,0,0.15), -5px 0px 5px 
     text-align: center;
     margin-top: 10px; }
 
+/* Join Video */
+.gv-video-join {
+  /********* UPLOAD CLIP ********/ }
+  .gv-video-join h4 {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px; }
+  .gv-video-join p {
+    text-align: center; }
+  .gv-video-join .progress {
+    height: 20px;
+    margin-bottom: 0;
+    overflow: hidden; }
+    .gv-video-join .progress .progress-bar {
+      float: left;
+      height: 100%;
+      font-size: 12px;
+      line-height: 20px;
+      color: #fff;
+      text-align: center;
+      background-color: #337ab7;
+      box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+      transition: width 0.6s ease; }
+    .gv-video-join .progress .progress-bar-info {
+      background-color: #5bc0de; }
+    .gv-video-join .progress .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      border: 0; }
+  .gv-video-join .upload-clip .video-clip {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+    display: block; }
+  .gv-video-join .upload-clip .videoUploadBtn {
+    text-align: center;
+    margin-top: 10px; }
+
 /* Settings Style */
 .gv-settings .profile {
   clear: both;

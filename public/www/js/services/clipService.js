@@ -41,6 +41,17 @@ gruvid.services.factory('Clip', function($http) {
         console.log('error saving custom event');
         callback(null);
       });
+    },
+
+    uploadAsGuest: function(clipData, callback){
+      $http.post('/api/v1/upload_guest_clip',clipData)
+      .success(function(data){
+        callback(data.id);
+      })
+      .error(function(data){
+        console.log('Error uploading clip as guest');
+        callback(null);
+      });
     }
 
   };
