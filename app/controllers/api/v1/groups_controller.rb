@@ -23,7 +23,11 @@ class Api::V1::GroupsController < Api::BaseController
       participants.each { |person|
         user = User.find_by_email(person[:email])
         if user.nil?
-          user = User.new(person)
+          user = User.new({
+            email: person[:email],
+            first_name: person[:first_name],
+            last_name: person[:last_name]
+          })
           user.password = "123456789"
           user.guest = true
           user.save

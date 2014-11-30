@@ -35,11 +35,18 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
          # :confirmable, :lockable, :timeoutable and :omniauthable
+         
+  before_save :update_default_fields
 
   has_and_belongs_to_many :groups
   has_many    :videos
   has_many    :clips
   has_many    :devices
   belongs_to  :invited_by, :class_name => 'User'
+  
+  def update_default_fields
+    self.name = "#{self.first_name} #{self.last_name}"
+    self.password = "123456789" if self.password.nil?
+  end
   
 end
