@@ -12,7 +12,7 @@ class Api::V1::GroupsController < Api::BaseController
       if video.group.nil?
         # create group
         group = Group.new()
-        group.name = "Group - #{video.title}"
+        group.name = "Group #{video.id}"
         group.save
         video.group_id = group.id
         video.save
