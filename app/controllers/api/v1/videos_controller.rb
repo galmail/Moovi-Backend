@@ -45,8 +45,8 @@ class Api::V1::VideosController < Api::BaseController
     end
     
     def render
-      params.require(:id)
-      video = Video.find(params[:id])
+      params.require(:video_id)
+      video = Video.find(params[:video_id])
       
       if video.moderator.id != current_user.id
         render :json => { error: "Only the moderator can render this video." }, status: :forbidden
@@ -56,8 +56,8 @@ class Api::V1::VideosController < Api::BaseController
       # call blender to render the video
       require 'net/http'
       uri = URI("#{ENV['BLENDER_URL']}/render")
-      params = { :output => "https://#{ENV['AWS_BUCKET']}.s3.amazonaws.com/videos/#{video.id}/"  }
-      video.clips.each{ |clip| params << { :videos => clip.url } }
+      params = { :output => "https://#{ENV['AWS_BUCKET']}.s3.amazonaws.com/videos/#{video.id}/", :videos => [] }
+      video.clips.each{ |clip| params[:videos] << clip.url }
       uri.query = URI.encode_www_form(params)
       res = Net::HTTP.get_response(uri)
       if !res.is_a?(Net::HTTPSuccess)
