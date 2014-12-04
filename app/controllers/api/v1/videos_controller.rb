@@ -43,5 +43,29 @@ class Api::V1::VideosController < Api::BaseController
       
       render :json => video.as_json, status: :ok
     end
+    
+    def render
+      params.require(:id)
+      video = Video.find(params[:id])
+      
+      # call blender to render the video
+      require 'net/http'
+      uri = URI("#{ENV['BLENDER_URL']}/render")
+      params = { :output => "https://#{ENV['AWS_BUCKET']}.s3.amazonaws.com/videos/#{video.id}/"  }
+      video.clips.each{ |clip| params << { :videos => clip.url } }
+      uri.query = URI.encode_www_form(params)
+      res = Net::HTTP.get_response(uri)
+      if !res.is_a?(Net::HTTPSuccess)
+        render :json => video.as_json, status: :internal_server_error
+      else
+        video.status = Video.statuses[:rendering]
+        if video.save
+          UserNotifier.send_video_is_rendering_email(video.moderator,video).deliver
+          render :json => video.as_json, status: :ok
+        else
+          render :json => video.as_json, status: :internal_server_error
+        end
+      end
+    end
 
 end

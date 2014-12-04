@@ -9,6 +9,8 @@
 defaults: &defaults
   # Settings
   GRUVID_EMAIL: hi@gruvid.com
+  GRUVID_URL: http://gruvid.herokuapp.com
+  BLENDER_URL: http://ec2-54-154-6-34.eu-west-1.compute.amazonaws.com
   
   # Amazon S3
   AWS_KEY: AKIAJWPSHM6LB7HAVAGQ
