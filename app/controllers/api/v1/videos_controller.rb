@@ -57,7 +57,7 @@ begin
       # call blender to render the video
       require 'net/http'
       uri = URI("#{ENV['BLENDER_URL']}/render")
-      uri_params = { :output => "https://#{ENV['AWS_BUCKET']}.s3.amazonaws.com/videos/#{video.id}/", :videos => [] }
+      uri_params = { :output => "\"https://#{ENV['AWS_BUCKET']}.s3.amazonaws.com/videos/#{video.id}/\"", :videos => [] }
       video.clips.each{ |clip| uri_params[:videos] << '"'+clip.url+'"' }
       uri.query = URI.encode_www_form(uri_params)
       res = Net::HTTP.get_response(uri)
