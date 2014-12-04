@@ -56,9 +56,9 @@ class Api::V1::VideosController < Api::BaseController
       # call blender to render the video
       require 'net/http'
       uri = URI("#{ENV['BLENDER_URL']}/render")
-      params = { :output => "https://#{ENV['AWS_BUCKET']}.s3.amazonaws.com/videos/#{video.id}/", :videos => [] }
-      video.clips.each{ |clip| params[:videos] << clip.url }
-      uri.query = URI.encode_www_form(params)
+      uri_params = { :output => "https://#{ENV['AWS_BUCKET']}.s3.amazonaws.com/videos/#{video.id}/", :videos => [] }
+      video.clips.each{ |clip| uri_params[:videos] << clip.url }
+      uri.query = URI.encode_www_form(uri_params)
       res = Net::HTTP.get_response(uri)
       if !res.is_a?(Net::HTTPSuccess)
         render :json => { error: "It looks like Blender Server is down." }, status: :internal_server_error
