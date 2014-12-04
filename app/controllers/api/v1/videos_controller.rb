@@ -48,6 +48,11 @@ class Api::V1::VideosController < Api::BaseController
       params.require(:id)
       video = Video.find(params[:id])
       
+      if video.moderator.id != current_user.id
+        render :json => { error: "Only the moderator can render this video." }, status: :forbidden
+        return false
+      end
+      
       # call blender to render the video
       require 'net/http'
       uri = URI("#{ENV['BLENDER_URL']}/render")
@@ -56,7 +61,7 @@ class Api::V1::VideosController < Api::BaseController
       uri.query = URI.encode_www_form(params)
       res = Net::HTTP.get_response(uri)
       if !res.is_a?(Net::HTTPSuccess)
-        render :json => video.as_json, status: :internal_server_error
+        render :json => { error: "It looks like Blender Server is down." }, status: :internal_server_error
       else
         video.status = Video.statuses[:rendering]
         if video.save
