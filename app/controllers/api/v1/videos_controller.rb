@@ -45,7 +45,7 @@ class Api::V1::VideosController < Api::BaseController
     end
     
     def render
-      params.require(:video_id)
+      #params.require(:video_id)
       video = Video.find(params[:video_id])
       
       if video.moderator.id != current_user.id
