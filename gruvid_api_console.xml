@@ -136,6 +136,19 @@
           </method>
       </resource>
       
+      <!-- render_video -->
+      <resource path="/api/v1/videos/:id/render">
+          <param name="Content-Type" required="true" type="xsd:string" style="header" default="application/json"></param>
+          <param name="Accept" required="true" type="xsd:string" style="header" default="application/json"></param>
+          <method id="render_video" name="POST" apigee:displayName="Render Video">
+              <apigee:tags>
+                  <apigee:tag primary="true">Videos</apigee:tag>
+              </apigee:tags>
+              <apigee:authentication required="true"/>
+              <doc apigee:url="http://api.mydomain.com/doc/my-method">render_video</doc>
+          </method>
+      </resource>
+      
       <!-- ##################### CLIPS ##################### -->
       
       <!-- get_clips -->
