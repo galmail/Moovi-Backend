@@ -1,4 +1,17 @@
 ActiveAdmin.register Group do
+  
+  
+  show do |g|
+    attributes_table do
+      row :id
+      row :name
+      g.users.each{ |u|
+        row :participant do
+          link_to(u.name, admin_user_path(u.id))
+        end
+      }
+    end
+  end
 
 
   # See permitted parameters documentation:
