@@ -44,10 +44,10 @@ class Api::V1::VideosController < Api::BaseController
       render :json => video.as_json, status: :ok
     end
     
-    def render
-      params.require(:id)
+    def render(video_id)
+      #params.require(:id)
       begin
-        video = Video.find(params[:id])
+        video = Video.find(video_id)
         if video.moderator.id != current_user.id
           render :json => { error: "Only the moderator can render this video." }, status: :forbidden
           return false
@@ -73,11 +73,6 @@ class Api::V1::VideosController < Api::BaseController
       rescue
         render :json => { error: "It looks like Blender Server is down." }, status: :internal_server_error
       end
-      
-      
-      
-      
-      
     end
 
 end

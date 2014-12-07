@@ -11,7 +11,9 @@ Rails.application.routes.draw do
   
   namespace :api do
     namespace :v1 do
-      resources :videos, defaults: {format: :json}
+      resources :videos, defaults: {format: :json} do
+        post 'render'
+      end
       resources :clips, defaults: {format: :json}
       resources :events, defaults: {format: :json}
       resources :groups, defaults: {format: :json}
@@ -29,7 +31,7 @@ Rails.application.routes.draw do
       get   's3_token', :controller => 's3_token', :action => 'index'
       post  'upload_guest_clip', :controller => 'join_video', :action => 'create'
       post  'video_is_ready', :controller => 'blender', :action => 'create'
-      post  'videos/:id/render', :controller => 'videos', :action => 'render'
+      #post  'videos/:id/render', :controller => 'videos', :action => 'render'
       
     end
   end
