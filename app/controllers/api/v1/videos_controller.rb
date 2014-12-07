@@ -56,9 +56,13 @@ class Api::V1::VideosController < Api::BaseController
       elsif video.status == Video.statuses[:rendering]
         render :json => {error: "Video is currently rendering..." },status: :forbidden
       else
-        if video.renderme
-          render :json => video.as_json, status: :ok
-        else
+        begin
+          if video.renderme
+            render :json => video.as_json, status: :ok
+          else
+            render :json => video.as_json, status: :service_unavailable
+          end
+        rescue StandardError
           render :json => video.as_json, status: :service_unavailable
         end
       end
