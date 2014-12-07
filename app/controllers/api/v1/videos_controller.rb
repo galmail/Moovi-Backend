@@ -47,29 +47,35 @@ class Api::V1::VideosController < Api::BaseController
     def render
       params.require(:video_id)
       # begin
-        video = Video.find(params[:video_id])
-        if video.moderator.id != current_user.id
-          render :json => { error: "Only the moderator can render this video." }, status: :forbidden
-          return false
-        end
-        # call blender to render the video
-        require 'net/http'
-        uri = URI("#{ENV['BLENDER_URL']}/render")
-        uri_params = { :output => "\"https://#{ENV['AWS_BUCKET']}.s3.amazonaws.com/videos/#{video.id}/\"", :videos => [] }
-        video.clips.each{ |clip| uri_params[:videos] << '"'+clip.url+'"' }
-        uri.query = URI.encode_www_form(uri_params)
-        res = Net::HTTP.get_response(uri)
-        if !res.is_a?(Net::HTTPSuccess)
-          render :json => { error: "It looks like Blender Server is down." }, status: :internal_server_error
+      video = Video.find(params[:video_id])
+      if video.moderator.id != current_user.id
+        render :json => { error: "Only the moderator can render this video." }, status: :forbidden
+        return false
+      end
+      
+      if video.clips.length < 2
+        render :json => { error: "Video must have at least 2 clips." }, status: :forbidden
+        return false
+      end
+      
+      # call blender to render the video
+      require 'net/http'
+      uri = URI("#{ENV['BLENDER_URL']}/render")
+      uri_params = { :output => "\"https://#{ENV['AWS_BUCKET']}.s3.amazonaws.com/videos/#{video.id}/\"", :videos => [] }
+      video.clips.each{ |clip| uri_params[:videos] << '"'+clip.url+'"' }
+      uri.query = URI.encode_www_form(uri_params)
+      res = Net::HTTP.get_response(uri)
+      if !res.is_a?(Net::HTTPSuccess)
+        render :json => { error: "It looks like Blender Server is down." }, status: :internal_server_error
+      else
+        video.status = Video.statuses[:rendering]
+        if video.save
+          UserNotifier.send_video_is_rendering_email(video.moderator,video).deliver
+          render :json => video.as_json, status: :ok
         else
-          video.status = Video.statuses[:rendering]
-          if video.save
-            UserNotifier.send_video_is_rendering_email(video.moderator,video).deliver
-            render :json => video.as_json, status: :ok
-          else
-            render :json => video.as_json, status: :internal_server_error
-          end
+          render :json => video.as_json, status: :internal_server_error
         end
+      end
       # rescue
         # render :json => { error: "It looks like Blender Server is down." }, status: :internal_server_error
       # end
