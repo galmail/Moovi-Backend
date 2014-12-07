@@ -35,7 +35,7 @@ class Video < ActiveRecord::Base
   }
   
   # call blender to render the video
-  def render
+  def renderme
     #require 'net/http'
     uri = URI("#{ENV['BLENDER_URL']}/render")
     uri_params = { :output => "\"https://#{ENV['AWS_BUCKET']}.s3.amazonaws.com/videos/#{self.id}/\"", :videos => [] }
