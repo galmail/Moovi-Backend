@@ -36,20 +36,24 @@ class Video < ActiveRecord::Base
   
   # call blender to render the video
   def renderme
-    require 'net/http'
-    uri = URI("#{ENV['BLENDER_URL']}/render")
-    uri_params = { :output => "\"https://#{ENV['AWS_BUCKET']}.s3.amazonaws.com/videos/#{self.id}/\"", :videos => [] }
-    self.clips.each{ |clip| uri_params[:videos] << '"'+clip.url+'"' }
-    uri.query = URI.encode_www_form(uri_params)
-    res = Net::HTTP.get_response(uri)
-    if res.is_a?(Net::HTTPSuccess)
-      self.status = Video.statuses[:rendering]
-      if self.save
-        UserNotifier.send_video_is_rendering_email(self.moderator,self).deliver
-        return true
+    begin
+      require 'net/http'
+      uri = URI("#{ENV['BLENDER_URL']}/render")
+      uri_params = { :output => "\"https://#{ENV['AWS_BUCKET']}.s3.amazonaws.com/videos/#{self.id}/\"", :videos => [] }
+      self.clips.each{ |clip| uri_params[:videos] << '"'+clip.url+'"' }
+      uri.query = URI.encode_www_form(uri_params)
+      res = Net::HTTP.get_response(uri)
+      if res.is_a?(Net::HTTPSuccess)
+        self.status = Video.statuses[:rendering]
+        if self.save
+          UserNotifier.send_video_is_rendering_email(self.moderator,self).deliver
+          return true
+        end
       end
+      return false
+    rescue
+      return false
     end
-    return false
   end
   
 end
