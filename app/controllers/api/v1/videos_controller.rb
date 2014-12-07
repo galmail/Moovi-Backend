@@ -46,16 +46,16 @@ class Api::V1::VideosController < Api::BaseController
     
     
     def render
-      #params.require(:video_id)
+      params.require(:video_id)
       video = Video.find(params[:video_id])
       if video.nil?
-        render :json => { error: "Invalid Video ID." }, status: :forbidden
+        render :json => { error: "Invalid Video ID." }.as_json, status: :forbidden
       elsif video.moderator.id != current_user.id
-        render :json => { error: "Only the moderator can render this video." }, status: :forbidden
+        render :json => { error: "Only the moderator can render this video." }.as_json, status: :forbidden
       elsif video.clips.length < 2
-        render :json => { error: "Video must have at least 2 clips." }, status: :forbidden
+        render :json => { error: "Video must have at least 2 clips." }.as_json, status: :forbidden
       elsif video.status != Video.statuses[:pending]
-        render :json => { error: "Video is not ready for render." }, status: :forbidden
+        render :json => { error: "Video is not ready for render." }.as_json, status: :forbidden
       else
         if video.render
           render :json => video.as_json, status: :ok
