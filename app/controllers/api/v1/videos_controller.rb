@@ -53,8 +53,8 @@ class Api::V1::VideosController < Api::BaseController
         render :json => { error: "Only the moderator can render this video." }, status: :forbidden
       elsif video.clips.length < 2
         render :json => { error: "Video must have at least 2 clips." }, status: :forbidden
-      elsif video.status != Video.statuses[:pending]
-        render :json => {error: "Video is not ready for render." },status: :forbidden
+      elsif video.status == Video.statuses[:rendering]
+        render :json => {error: "Video is currently rendering..." },status: :forbidden
       else
         if video.renderme
           render :json => video.as_json, status: :ok
