@@ -44,10 +44,10 @@ class Api::V1::VideosController < Api::BaseController
       render :json => video.as_json, status: :ok
     end
     
-    def render(video_id)
-      #params.require(:id)
+    def render
+      params.require(:video_id)
       begin
-        video = Video.find(video_id)
+        video = Video.find(params[:video_id])
         if video.moderator.id != current_user.id
           render :json => { error: "Only the moderator can render this video." }, status: :forbidden
           return false
