@@ -5,7 +5,7 @@ Rails.application.routes.draw do
 
   root 'main#index'
   
-  get "/api" => redirect("https://apigee.com/galmail/console/gruvid")
+  get "/api" => redirect("https://apigee.com/galmail/console/moovi")
   
   devise_for :users, :controllers => {:registrations => "registrations", :sessions => "sessions"}
   

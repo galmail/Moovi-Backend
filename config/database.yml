@@ -22,11 +22,11 @@ default: &default
 
 development:
   <<: *default
-  database: gruvid_dev
+  database: moovi_dev
 
 test:
   <<: *default
-  database: gruvid_test
+  database: moovi_test
 
 production:
   <<: *default

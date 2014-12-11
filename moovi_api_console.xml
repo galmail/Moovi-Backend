@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <application xmlns="http://wadl.dev.java.net/2009/02" xmlns:apigee="http://api.apigee.com/wadl/2010/07/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://wadl.dev.java.net/2009/02 http://apigee.com/schemas/wadl-schema.xsd http://api.apigee.com/wadl/2010/07/ http://apigee.com/schemas/apigee-wadl-extensions.xsd">
-   <resources base="http://gruvid.herokuapp.com">
+   <resources base="http://moovi.herokuapp.com">
       
       <!-- ##################### AUTHENTICATION ##################### -->
       
@@ -41,7 +41,7 @@
          <param name="Content-Type" required="true" type="xsd:string" style="header" default="application/json" />
          <param name="Accept" required="true" type="xsd:string" style="header" default="application/json" />
          <param name="email" required="true" type="xsd:string" style="query" default="user1@example.com" />
-         <param name="password" required="false" type="xsd:string" style="query" default="gruvidgruvid" />
+         <param name="password" required="false" type="xsd:string" style="query" default="shmoovi" />
          <param name="auth_token" required="false" type="xsd:string" style="query" default="kZz88RuBL5t5coJfitpR" />
          <method id="login" name="GET" apigee:displayName="Login">
             <apigee:tags>
