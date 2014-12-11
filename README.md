@@ -1,10 +1,10 @@
 # Mooviapp Backend #
 
-It runs on Heroku at: http://mooviapp.herokuapp.com
+It runs on Heroku at: http://moovi.herokuapp.com
 
-Check the APIs at: http://mooviapp.herokuapp.com/api
+Check the APIs at: http://moovi.herokuapp.com/api
 
-Admin Web App is running at: http://mooviapp.herokuapp.com/admin
+Admin Web App is running at: http://moovi.herokuapp.com/admin
 
 ## Tech Stack and Dependencies ##
 
